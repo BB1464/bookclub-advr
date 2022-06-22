@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.1 SLIDE 1 | Advanced R Book Club</title>
+  <title>5.3 Choises | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.1 SLIDE 1 | Advanced R Book Club" />
+  <meta property="og:title" content="5.3 Choises | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.1 SLIDE 1 | Advanced R Book Club" />
+  <meta name="twitter:title" content="5.3 Choises | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="environments.html"/>
-<link rel="next" href="meeting-videos-6.html"/>
+<link rel="prev" href="choices-and-loops.html"/>
+<link rel="next" href="loops.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -568,20 +568,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="slide-1-2" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> SLIDE 1<a href="slide-1-2.html#slide-1-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="choises" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Choises<a href="choises.html#choises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>ADD SLIDES AS SECTIONS (<code>##</code>).</li>
-<li>TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.</li>
+<li><code>if()</code> and <code>ifelse()</code></li>
 </ul>
+<center>
+<div id="htmlwidget-776b289fb5aaa7a0d187" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-776b289fb5aaa7a0d187">{"x":{"diagram":"\ngraph TD\nA{if}-->B(condition)\n     B-->C(true action)\n     \nD{if}-->E(condition)\n     E-->F(true action)\nE-->G((else))\n     G-->H(false action)\n     \nI{ifelse}-->L(condition)\n     L-->M(true action)\n     L-->N(false action)\n\nstyle A fill:#f96\nstyle D fill:#f96\nstyle I fill:#f96\nstyle G fill:#f96\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+</center>
+<p><code>if (condition) true_action</code>
+<br>
+<code>if (condition) true_action else false_action</code></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="choises.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (test_expression) {</span>
+<span id="cb65-2"><a href="choises.html#cb65-2" aria-hidden="true" tabindex="-1"></a>   yes</span>
+<span id="cb65-3"><a href="choises.html#cb65-3" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb65-4"><a href="choises.html#cb65-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb65-5"><a href="choises.html#cb65-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb65-6"><a href="choises.html#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (test_expression) {   </span>
+<span id="cb65-7"><a href="choises.html#cb65-7" aria-hidden="true" tabindex="-1"></a>  yes</span>
+<span id="cb65-8"><a href="choises.html#cb65-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (other test_expression) {</span>
+<span id="cb65-9"><a href="choises.html#cb65-9" aria-hidden="true" tabindex="-1"></a>    no</span>
+<span id="cb65-10"><a href="choises.html#cb65-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb65-11"><a href="choises.html#cb65-11" aria-hidden="true" tabindex="-1"></a>      other</span>
+<span id="cb65-12"><a href="choises.html#cb65-12" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb65-13"><a href="choises.html#cb65-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb65-14"><a href="choises.html#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span>  </span>
+<span id="cb65-15"><a href="choises.html#cb65-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(test, yes, no)</span></code></pre></div>
+<p>Note: <strong>What is the difference?</strong></p>
+<p><code>dplyr::if_else()</code> and base R <code>ifelse()</code></p>
+<blockquote>
+<p>if_else is more strict. It checks that both alternatives are of the same type and otherwise throws an error, while ifelse will promote types as necessary. This may be a benefit in some circumstances, but may otherwise break scripts if you don’t check for errors or explicitly force type conversion.
+source: <a href="https://stackoverflow.com/questions/50646133/dplyr-if-else-vs-base-r-ifelse" class="uri">https://stackoverflow.com/questions/50646133/dplyr-if-else-vs-base-r-ifelse</a></p>
+</blockquote>
+<p><strong>For example:</strong></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="choises.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>),<span class="st">&quot;a&quot;</span>,<span class="dv">3</span>)</span>
+<span id="cb66-2"><a href="choises.html#cb66-2" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">if_else</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>),<span class="st">&quot;a&quot;</span>,<span class="dv">3</span>)</span></code></pre></div>
+<p>It releases an error in <code>dplyr::if_else(c(TRUE, TRUE, FALSE), "a", 3)</code> :</p>
+<p><code>must be a character vector, not a double vector.</code></p>
+<p>An alternative to <code>ifelse</code> defined as <strong>condition-vector pairs</strong> and more broadly as a general vectorised <code>if</code> is:</p>
+<ul>
+<li><code>case_when()</code></li>
+</ul>
+<p>It allows you to vectorise multiple <code>if_else()</code> statements</p>
+<center>
+<div id="htmlwidget-89a2408f954429e0287e" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-89a2408f954429e0287e">{"x":{"diagram":"\n   graph TD\n\nI{ifelse}-->L(condition)\n\nA{case_when}-->B(condition)\n\nC{switch}-->D((list of conditions))\n\nstyle I fill:#f27,stroke:#f66,stroke-width:3px\nstyle A fill:#f99,stroke:#f66,stroke-width:3px\nstyle C fill:#f96,stroke:#f66,stroke-width:3px\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle D fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+</center>
+<p>Finally, the last tool just mentioned is <code>switch()</code>, here is an example on how to use it:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="choises.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(stats)</span>
+<span id="cb67-2"><a href="choises.html#cb67-2" aria-hidden="true" tabindex="-1"></a>centre <span class="ot">&lt;-</span> <span class="cf">function</span>(x, type) {</span>
+<span id="cb67-3"><a href="choises.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span>(type,</span>
+<span id="cb67-4"><a href="choises.html#cb67-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean =</span> <span class="fu">mean</span>(x),</span>
+<span id="cb67-5"><a href="choises.html#cb67-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">median =</span> <span class="fu">median</span>(x),</span>
+<span id="cb67-6"><a href="choises.html#cb67-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">trimmed =</span> <span class="fu">mean</span>(x, <span class="at">trim =</span> .<span class="dv">1</span>))</span>
+<span id="cb67-7"><a href="choises.html#cb67-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb67-8"><a href="choises.html#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="choises.html#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb67-10"><a href="choises.html#cb67-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(<span class="dv">10</span>)</span>
+<span id="cb67-11"><a href="choises.html#cb67-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-12"><a href="choises.html#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
+<span id="cb67-13"><a href="choises.html#cb67-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(x), <span class="fu">aes</span>(x))<span class="sc">+</span></span>
+<span id="cb67-14"><a href="choises.html#cb67-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()<span class="sc">+</span></span>
+<span id="cb67-15"><a href="choises.html#cb67-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="fu">centre</span>(x, <span class="st">&quot;mean&quot;</span>),</span>
+<span id="cb67-16"><a href="choises.html#cb67-16" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">centre</span>(x, <span class="st">&quot;median&quot;</span>),</span>
+<span id="cb67-17"><a href="choises.html#cb67-17" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">centre</span>(x, <span class="st">&quot;trimmed&quot;</span>)),</span>
+<span id="cb67-18"><a href="choises.html#cb67-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="fl">0.5</span>,<span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>,</span>
+<span id="cb67-19"><a href="choises.html#cb67-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>,<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>))<span class="sc">+</span></span>
+<span id="cb67-20"><a href="choises.html#cb67-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>)<span class="sc">+</span></span>
+<span id="cb67-21"><a href="choises.html#cb67-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="bookclub-advr_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="environments.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="meeting-videos-6.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="choices-and-loops.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="loops.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -612,7 +676,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/07_Environments.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/05_Control_flow.Rmd",
 "text": "Edit"
 },
 "history": {
