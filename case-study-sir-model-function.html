@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 16 Trade-offs | Advanced R Book Club</title>
+  <title>6.6 Case Study: SIR model function | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 16 Trade-offs | Advanced R Book Club" />
+  <meta property="og:title" content="6.6 Case Study: SIR model function | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 16 Trade-offs | Advanced R Book Club" />
+  <meta name="twitter:title" content="6.6 Case Study: SIR model function | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="meeting-videos-14.html"/>
-<link rel="next" href="slide-1-10.html"/>
+<link rel="prev" href="more-about-functions-insights.html"/>
+<link rel="next" href="meeting-videos-5.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -579,20 +579,253 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trade-offs" class="section level1 hasAnchor" number="16">
-<h1><span class="header-section-number">Chapter 16</span> Trade-offs<a href="trade-offs.html#trade-offs" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Learning objectives:</strong></p>
+<div id="case-study-sir-model-function" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Case Study: SIR model function<a href="case-study-sir-model-function.html#case-study-sir-model-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is an interesting example taken from a course on Coursera: <a href="https://www.coursera.org/specializations/infectious-disease-modelling">Infectious disease modelling-ICL</a></p>
+<p>The purpose of this example is to show how to make a model passing through making a function.</p>
+<p>First we need to load some useful libraries:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="case-study-sir-model-function.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb92-2"><a href="case-study-sir-model-function.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code></pre></div>
+<p>Then set the model inputs:</p>
 <ul>
-<li>THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY</li>
+<li>population size (N)</li>
+<li>number of susceptable (S)</li>
+<li>infected (I)</li>
+<li>recovered (R)</li>
 </ul>
+<p>And add the model parameters:</p>
+<ul>
+<li>infection rate (<span class="math inline">\(\beta\)</span>)</li>
+<li>recovery rate (<span class="math inline">\(\gamma\)</span>)</li>
+</ul>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="case-study-sir-model-function.html#cb93-1" aria-hidden="true" tabindex="-1"></a>N<span class="ot">&lt;-</span> <span class="dv">100000</span>                  <span class="co"># population</span></span>
+<span id="cb93-2"><a href="case-study-sir-model-function.html#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="case-study-sir-model-function.html#cb93-3" aria-hidden="true" tabindex="-1"></a>state_values<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">S =</span> N <span class="sc">-</span><span class="dv">1</span>,   <span class="co"># susceptible</span></span>
+<span id="cb93-4"><a href="case-study-sir-model-function.html#cb93-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">I =</span> <span class="dv">1</span>,      <span class="co"># infected</span></span>
+<span id="cb93-5"><a href="case-study-sir-model-function.html#cb93-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">R =</span> <span class="dv">0</span>)      <span class="co"># recovered</span></span>
+<span id="cb93-6"><a href="case-study-sir-model-function.html#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="case-study-sir-model-function.html#cb93-7" aria-hidden="true" tabindex="-1"></a>parameters<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>,  <span class="co"># infection rate days^-1</span></span>
+<span id="cb93-8"><a href="case-study-sir-model-function.html#cb93-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">gamma =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="co"># recovery rate days^-1</span></span></code></pre></div>
+<p>Then we set the <strong>time</strong> as an important factor, which defines the length of time we are looking at this model run. It is intended as the time range in which the infections spread out, let’s say that we are aiming to investigate an infection period of 100 days.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="case-study-sir-model-function.html#cb94-1" aria-hidden="true" tabindex="-1"></a>times<span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>Finally, we set up the <strong>SIR model</strong>, the susceptable, infected and recovered model. How do we do that is passing the paramenters through a function of the time, and state.</p>
+<p>Within the model function we calculate one more paramenter, the <strong>force of infection</strong>: <span class="math inline">\(\lambda\)</span></p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="case-study-sir-model-function.html#cb95-1" aria-hidden="true" tabindex="-1"></a>sir_model<span class="ot">&lt;-</span> <span class="cf">function</span>(time, state, parameters){</span>
+<span id="cb95-2"><a href="case-study-sir-model-function.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)),{</span>
+<span id="cb95-3"><a href="case-study-sir-model-function.html#cb95-3" aria-hidden="true" tabindex="-1"></a>    N<span class="ot">&lt;-</span> S <span class="sc">+</span> I <span class="sc">+</span> R</span>
+<span id="cb95-4"><a href="case-study-sir-model-function.html#cb95-4" aria-hidden="true" tabindex="-1"></a>    lambda <span class="ot">=</span> beta <span class="sc">*</span> I<span class="sc">/</span>N    <span class="co"># force of infection</span></span>
+<span id="cb95-5"><a href="case-study-sir-model-function.html#cb95-5" aria-hidden="true" tabindex="-1"></a>    dS<span class="ot">&lt;-</span> <span class="sc">-</span> lambda <span class="sc">*</span> S </span>
+<span id="cb95-6"><a href="case-study-sir-model-function.html#cb95-6" aria-hidden="true" tabindex="-1"></a>    dI<span class="ot">&lt;-</span> lambda <span class="sc">*</span> S <span class="sc">-</span> gamma <span class="sc">*</span> I</span>
+<span id="cb95-7"><a href="case-study-sir-model-function.html#cb95-7" aria-hidden="true" tabindex="-1"></a>    dR<span class="ot">&lt;-</span> gamma <span class="sc">*</span> I</span>
+<span id="cb95-8"><a href="case-study-sir-model-function.html#cb95-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dS,dI,dR)))</span>
+<span id="cb95-9"><a href="case-study-sir-model-function.html#cb95-9" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb95-10"><a href="case-study-sir-model-function.html#cb95-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Once we have our <strong>SIR model</strong> function ready, we can calculate the <strong>output</strong> of the model, with the help of the function <code>ode()</code> from {deSolve} package.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="case-study-sir-model-function.html#cb96-1" aria-hidden="true" tabindex="-1"></a>output<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">ode</span>(<span class="at">y =</span> state_values,</span>
+<span id="cb96-2"><a href="case-study-sir-model-function.html#cb96-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">times =</span> times,</span>
+<span id="cb96-3"><a href="case-study-sir-model-function.html#cb96-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">func =</span> sir_model,</span>
+<span id="cb96-4"><a href="case-study-sir-model-function.html#cb96-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">parms =</span> parameters))</span>
+<span id="cb96-5"><a href="case-study-sir-model-function.html#cb96-5" aria-hidden="true" tabindex="-1"></a>output <span class="sc">%&gt;%</span> head</span>
+<span id="cb96-6"><a href="case-study-sir-model-function.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   time        S        I         R</span></span>
+<span id="cb96-7"><a href="case-study-sir-model-function.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    0 99999.00 1.000000 0.0000000</span></span>
+<span id="cb96-8"><a href="case-study-sir-model-function.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    1 99998.43 1.284018 0.2840252</span></span>
+<span id="cb96-9"><a href="case-study-sir-model-function.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    2 99997.70 1.648696 0.6487171</span></span>
+<span id="cb96-10"><a href="case-study-sir-model-function.html#cb96-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    3 99996.77 2.116939 1.1169863</span></span>
+<span id="cb96-11"><a href="case-study-sir-model-function.html#cb96-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    4 99995.56 2.718152 1.7182450</span></span>
+<span id="cb96-12"><a href="case-study-sir-model-function.html#cb96-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    5 99994.02 3.490086 2.4902600</span></span></code></pre></div>
+<p>In addition to our builtin SIR model function we can have a look at:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="case-study-sir-model-function.html#cb97-1" aria-hidden="true" tabindex="-1"></a>?deSolve<span class="sc">::</span><span class="fu">ode</span>()</span></code></pre></div>
+<p>It solves <strong>Ordinary Differential Equations</strong>.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="case-study-sir-model-function.html#cb98-1" aria-hidden="true" tabindex="-1"></a>deSolve<span class="sc">:::</span>ode</span>
+<span id="cb98-2"><a href="case-study-sir-model-function.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (y, times, func, parms, method = c(&quot;lsoda&quot;, &quot;lsode&quot;, </span></span>
+<span id="cb98-3"><a href="case-study-sir-model-function.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &quot;lsodes&quot;, &quot;lsodar&quot;, &quot;vode&quot;, &quot;daspk&quot;, &quot;euler&quot;, &quot;rk4&quot;, &quot;ode23&quot;, </span></span>
+<span id="cb98-4"><a href="case-study-sir-model-function.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &quot;ode45&quot;, &quot;radau&quot;, &quot;bdf&quot;, &quot;bdf_d&quot;, &quot;adams&quot;, &quot;impAdams&quot;, &quot;impAdams_d&quot;, </span></span>
+<span id="cb98-5"><a href="case-study-sir-model-function.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &quot;iteration&quot;), ...) </span></span>
+<span id="cb98-6"><a href="case-study-sir-model-function.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb98-7"><a href="case-study-sir-model-function.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (is.null(method)) </span></span>
+<span id="cb98-8"><a href="case-study-sir-model-function.html#cb98-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         method &lt;- &quot;lsoda&quot;</span></span>
+<span id="cb98-9"><a href="case-study-sir-model-function.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (is.list(method)) {</span></span>
+<span id="cb98-10"><a href="case-study-sir-model-function.html#cb98-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         if (!inherits(method, &quot;rkMethod&quot;)) </span></span>
+<span id="cb98-11"><a href="case-study-sir-model-function.html#cb98-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             stop(&quot;&#39;method&#39; should be given as string or as a list of class &#39;rkMethod&#39;&quot;)</span></span>
+<span id="cb98-12"><a href="case-study-sir-model-function.html#cb98-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         out &lt;- rk(y, times, func, parms, method = method, ...)</span></span>
+<span id="cb98-13"><a href="case-study-sir-model-function.html#cb98-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb98-14"><a href="case-study-sir-model-function.html#cb98-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     else if (is.function(method)) </span></span>
+<span id="cb98-15"><a href="case-study-sir-model-function.html#cb98-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         out &lt;- method(y, times, func, parms, ...)</span></span>
+<span id="cb98-16"><a href="case-study-sir-model-function.html#cb98-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     else if (is.complex(y)) </span></span>
+<span id="cb98-17"><a href="case-study-sir-model-function.html#cb98-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         out &lt;- switch(match.arg(method), vode = zvode(y, times, </span></span>
+<span id="cb98-18"><a href="case-study-sir-model-function.html#cb98-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             func, parms, ...), bdf = zvode(y, times, func, parms, </span></span>
+<span id="cb98-19"><a href="case-study-sir-model-function.html#cb98-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             mf = 22, ...), bdf_d = zvode(y, times, func, parms, </span></span>
+<span id="cb98-20"><a href="case-study-sir-model-function.html#cb98-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             mf = 23, ...), adams = zvode(y, times, func, parms, </span></span>
+<span id="cb98-21"><a href="case-study-sir-model-function.html#cb98-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             mf = 10, ...), impAdams = zvode(y, times, func, parms, </span></span>
+<span id="cb98-22"><a href="case-study-sir-model-function.html#cb98-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             mf = 12, ...), impAdams_d = zvode(y, times, func, </span></span>
+<span id="cb98-23"><a href="case-study-sir-model-function.html#cb98-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             parms, mf = 13, ...))</span></span>
+<span id="cb98-24"><a href="case-study-sir-model-function.html#cb98-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     else out &lt;- switch(match.arg(method), lsoda = lsoda(y, times, </span></span>
+<span id="cb98-25"><a href="case-study-sir-model-function.html#cb98-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         func, parms, ...), vode = vode(y, times, func, parms, </span></span>
+<span id="cb98-26"><a href="case-study-sir-model-function.html#cb98-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         ...), lsode = lsode(y, times, func, parms, ...), lsodes = lsodes(y, </span></span>
+<span id="cb98-27"><a href="case-study-sir-model-function.html#cb98-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         times, func, parms, ...), lsodar = lsodar(y, times, func, </span></span>
+<span id="cb98-28"><a href="case-study-sir-model-function.html#cb98-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         parms, ...), daspk = daspk(y, times, func, parms, ...), </span></span>
+<span id="cb98-29"><a href="case-study-sir-model-function.html#cb98-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         euler = rk(y, times, func, parms, method = &quot;euler&quot;, ...), </span></span>
+<span id="cb98-30"><a href="case-study-sir-model-function.html#cb98-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         rk4 = rk(y, times, func, parms, method = &quot;rk4&quot;, ...), </span></span>
+<span id="cb98-31"><a href="case-study-sir-model-function.html#cb98-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         ode23 = rk(y, times, func, parms, method = &quot;ode23&quot;, ...), </span></span>
+<span id="cb98-32"><a href="case-study-sir-model-function.html#cb98-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         ode45 = rk(y, times, func, parms, method = &quot;ode45&quot;, ...), </span></span>
+<span id="cb98-33"><a href="case-study-sir-model-function.html#cb98-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         radau = radau(y, times, func, parms, ...), bdf = lsode(y, </span></span>
+<span id="cb98-34"><a href="case-study-sir-model-function.html#cb98-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             times, func, parms, mf = 22, ...), bdf_d = lsode(y, </span></span>
+<span id="cb98-35"><a href="case-study-sir-model-function.html#cb98-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             times, func, parms, mf = 23, ...), adams = lsode(y, </span></span>
+<span id="cb98-36"><a href="case-study-sir-model-function.html#cb98-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             times, func, parms, mf = 10, ...), impAdams = lsode(y, </span></span>
+<span id="cb98-37"><a href="case-study-sir-model-function.html#cb98-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             times, func, parms, mf = 12, ...), impAdams_d = lsode(y, </span></span>
+<span id="cb98-38"><a href="case-study-sir-model-function.html#cb98-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             times, func, parms, mf = 13, ...), iteration = iteration(y, </span></span>
+<span id="cb98-39"><a href="case-study-sir-model-function.html#cb98-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             times, func, parms, ...))</span></span>
+<span id="cb98-40"><a href="case-study-sir-model-function.html#cb98-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     return(out)</span></span>
+<span id="cb98-41"><a href="case-study-sir-model-function.html#cb98-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb98-42"><a href="case-study-sir-model-function.html#cb98-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x561ae8b5a548&gt;</span></span>
+<span id="cb98-43"><a href="case-study-sir-model-function.html#cb98-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:deSolve&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="case-study-sir-model-function.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="st">&quot;ode&quot;</span>)</span>
+<span id="cb99-2"><a href="case-study-sir-model-function.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in .S3methods(generic.function, class, envir): function &#39;ode&#39; appears</span></span>
+<span id="cb99-3"><a href="case-study-sir-model-function.html#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; not to be S3 generic; found functions that look like S3 methods</span></span>
+<span id="cb99-4"><a href="case-study-sir-model-function.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] ode.1D   ode.2D   ode.3D   ode.band</span></span>
+<span id="cb99-5"><a href="case-study-sir-model-function.html#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; see &#39;?methods&#39; for accessing help and source code</span></span></code></pre></div>
+<hr />
+<p>With the help of the {reshape2} package we use the function <code>melt()</code> to reshape the output:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="case-study-sir-model-function.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">melt</span>(output,<span class="at">id=</span><span class="st">&quot;time&quot;</span>) <span class="sc">%&gt;%</span> head</span>
+<span id="cb100-2"><a href="case-study-sir-model-function.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   time variable    value</span></span>
+<span id="cb100-3"><a href="case-study-sir-model-function.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    0        S 99999.00</span></span>
+<span id="cb100-4"><a href="case-study-sir-model-function.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    1        S 99998.43</span></span>
+<span id="cb100-5"><a href="case-study-sir-model-function.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    2        S 99997.70</span></span>
+<span id="cb100-6"><a href="case-study-sir-model-function.html#cb100-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    3        S 99996.77</span></span>
+<span id="cb100-7"><a href="case-study-sir-model-function.html#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    4        S 99995.56</span></span>
+<span id="cb100-8"><a href="case-study-sir-model-function.html#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    5        S 99994.02</span></span></code></pre></div>
+<p>The same as usign <code>pivot_longer()</code> function.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="case-study-sir-model-function.html#cb101-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">%&gt;%</span></span>
+<span id="cb101-2"><a href="case-study-sir-model-function.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;S&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>),</span>
+<span id="cb101-3"><a href="case-study-sir-model-function.html#cb101-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb101-4"><a href="case-study-sir-model-function.html#cb101-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">&quot;values&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb101-5"><a href="case-study-sir-model-function.html#cb101-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(variable)) <span class="sc">%&gt;%</span></span>
+<span id="cb101-6"><a href="case-study-sir-model-function.html#cb101-6" aria-hidden="true" tabindex="-1"></a>  head</span>
+<span id="cb101-7"><a href="case-study-sir-model-function.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span id="cb101-8"><a href="case-study-sir-model-function.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    time variable values</span></span>
+<span id="cb101-9"><a href="case-study-sir-model-function.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;</span></span>
+<span id="cb101-10"><a href="case-study-sir-model-function.html#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     0 S        99999 </span></span>
+<span id="cb101-11"><a href="case-study-sir-model-function.html#cb101-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1 S        99998.</span></span>
+<span id="cb101-12"><a href="case-study-sir-model-function.html#cb101-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     2 S        99998.</span></span>
+<span id="cb101-13"><a href="case-study-sir-model-function.html#cb101-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     3 S        99997.</span></span>
+<span id="cb101-14"><a href="case-study-sir-model-function.html#cb101-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     4 S        99996.</span></span>
+<span id="cb101-15"><a href="case-study-sir-model-function.html#cb101-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     5 S        99994.</span></span></code></pre></div>
+<hr />
+<p>Before to proceed with the visualization of the SIR model output we do a bit of investigations.</p>
+<p><strong>What if we want to see how <code>melt()</code> function works?</strong></p>
+<p><strong>What instruments we can use to see inside the function and understand how it works?</strong></p>
+<p>Using just the function name <strong>melt</strong> or <code>structure()</code> function with <em>melt</em> as an argument, we obtain the same output. To select just the argument of the function we can do <code>args(melt)</code></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="case-study-sir-model-function.html#cb102-1" aria-hidden="true" tabindex="-1"></a>reshape2<span class="sc">:::</span>melt</span>
+<span id="cb102-2"><a href="case-study-sir-model-function.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (data, ..., na.rm = FALSE, value.name = &quot;value&quot;) </span></span>
+<span id="cb102-3"><a href="case-study-sir-model-function.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb102-4"><a href="case-study-sir-model-function.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     UseMethod(&quot;melt&quot;, data)</span></span>
+<span id="cb102-5"><a href="case-study-sir-model-function.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb102-6"><a href="case-study-sir-model-function.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x561ae64d3ad8&gt;</span></span>
+<span id="cb102-7"><a href="case-study-sir-model-function.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:reshape2&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="case-study-sir-model-function.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">body</span>(melt)</span>
+<span id="cb103-2"><a href="case-study-sir-model-function.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb103-3"><a href="case-study-sir-model-function.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     UseMethod(&quot;melt&quot;, data)</span></span>
+<span id="cb103-4"><a href="case-study-sir-model-function.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="case-study-sir-model-function.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formals</span>(melt)</span>
+<span id="cb104-2"><a href="case-study-sir-model-function.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $data</span></span>
+<span id="cb104-3"><a href="case-study-sir-model-function.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-4"><a href="case-study-sir-model-function.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-5"><a href="case-study-sir-model-function.html#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $...</span></span>
+<span id="cb104-6"><a href="case-study-sir-model-function.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-7"><a href="case-study-sir-model-function.html#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-8"><a href="case-study-sir-model-function.html#cb104-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $na.rm</span></span>
+<span id="cb104-9"><a href="case-study-sir-model-function.html#cb104-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb104-10"><a href="case-study-sir-model-function.html#cb104-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-11"><a href="case-study-sir-model-function.html#cb104-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $value.name</span></span>
+<span id="cb104-12"><a href="case-study-sir-model-function.html#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;value&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="case-study-sir-model-function.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">environment</span>(melt)</span>
+<span id="cb105-2"><a href="case-study-sir-model-function.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:reshape2&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="case-study-sir-model-function.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(melt)</span>
+<span id="cb106-2"><a href="case-study-sir-model-function.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;closure&quot;</span></span></code></pre></div>
+<blockquote>
+<p>“R functions simulate a closure by keeping an explicit reference to the environment that was active when the function was defined.”</p>
+</blockquote>
+<p>ref: <a href="https://www.r-bloggers.com/2015/03/using-closures-as-objects-in-r/">closures</a></p>
+<p>Try with <code>methods()</code>, or <code>print(methods(melt))</code>: Non-visible functions are asterisked!</p>
+<blockquote>
+<p>The S3 method name is followed by an asterisk * if the method definition is not exported from the package namespace in which the method is defined.</p>
+</blockquote>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="case-study-sir-model-function.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="st">&quot;melt&quot;</span>, data)</span>
+<span id="cb107-2"><a href="case-study-sir-model-function.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] melt.array*      melt.data.frame* melt.default*    melt.list*      </span></span>
+<span id="cb107-3"><a href="case-study-sir-model-function.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5] melt.matrix*     melt.table*     </span></span>
+<span id="cb107-4"><a href="case-study-sir-model-function.html#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; see &#39;?methods&#39; for accessing help and source code</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="case-study-sir-model-function.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;table&quot;</span>)</span>
+<span id="cb108-2"><a href="case-study-sir-model-function.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] [             aperm         as_tibble     as.data.frame Axis         </span></span>
+<span id="cb108-3"><a href="case-study-sir-model-function.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] coerce        initialize    lines         melt          plot         </span></span>
+<span id="cb108-4"><a href="case-study-sir-model-function.html#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] points        print         show          slotsFromS3   summary      </span></span>
+<span id="cb108-5"><a href="case-study-sir-model-function.html#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] tail         </span></span>
+<span id="cb108-6"><a href="case-study-sir-model-function.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; see &#39;?methods&#39; for accessing help and source code</span></span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="case-study-sir-model-function.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(UseMethod)</span></code></pre></div>
+<p>We can access to some of the above calls with <code>getAnywhere()</code>, for example here is done for “melt.data.frame”:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="case-study-sir-model-function.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getAnywhere</span>(<span class="st">&quot;melt.data.frame&quot;</span>)</span>
+<span id="cb110-2"><a href="case-study-sir-model-function.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A single object matching &#39;melt.data.frame&#39; was found</span></span>
+<span id="cb110-3"><a href="case-study-sir-model-function.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; It was found in the following places</span></span>
+<span id="cb110-4"><a href="case-study-sir-model-function.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   registered S3 method for melt from namespace reshape2</span></span>
+<span id="cb110-5"><a href="case-study-sir-model-function.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   namespace:reshape2</span></span>
+<span id="cb110-6"><a href="case-study-sir-model-function.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; with value</span></span>
+<span id="cb110-7"><a href="case-study-sir-model-function.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb110-8"><a href="case-study-sir-model-function.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (data, id.vars, measure.vars, variable.name = &quot;variable&quot;, </span></span>
+<span id="cb110-9"><a href="case-study-sir-model-function.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ..., na.rm = FALSE, value.name = &quot;value&quot;, factorsAsStrings = TRUE) </span></span>
+<span id="cb110-10"><a href="case-study-sir-model-function.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {</span></span>
+<span id="cb110-11"><a href="case-study-sir-model-function.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     vars &lt;- melt_check(data, id.vars, measure.vars, variable.name, </span></span>
+<span id="cb110-12"><a href="case-study-sir-model-function.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         value.name)</span></span>
+<span id="cb110-13"><a href="case-study-sir-model-function.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     id.ind &lt;- match(vars$id, names(data))</span></span>
+<span id="cb110-14"><a href="case-study-sir-model-function.html#cb110-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     measure.ind &lt;- match(vars$measure, names(data))</span></span>
+<span id="cb110-15"><a href="case-study-sir-model-function.html#cb110-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (!length(measure.ind)) {</span></span>
+<span id="cb110-16"><a href="case-study-sir-model-function.html#cb110-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         return(data[id.vars])</span></span>
+<span id="cb110-17"><a href="case-study-sir-model-function.html#cb110-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb110-18"><a href="case-study-sir-model-function.html#cb110-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     args &lt;- normalize_melt_arguments(data, measure.ind, factorsAsStrings)</span></span>
+<span id="cb110-19"><a href="case-study-sir-model-function.html#cb110-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     measure.attributes &lt;- args$measure.attributes</span></span>
+<span id="cb110-20"><a href="case-study-sir-model-function.html#cb110-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     factorsAsStrings &lt;- args$factorsAsStrings</span></span>
+<span id="cb110-21"><a href="case-study-sir-model-function.html#cb110-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     valueAsFactor &lt;- &quot;factor&quot; %in% measure.attributes$class</span></span>
+<span id="cb110-22"><a href="case-study-sir-model-function.html#cb110-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     df &lt;- melt_dataframe(data, as.integer(id.ind - 1), as.integer(measure.ind - </span></span>
+<span id="cb110-23"><a href="case-study-sir-model-function.html#cb110-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1), as.character(variable.name), as.character(value.name), </span></span>
+<span id="cb110-24"><a href="case-study-sir-model-function.html#cb110-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         as.pairlist(measure.attributes), as.logical(factorsAsStrings), </span></span>
+<span id="cb110-25"><a href="case-study-sir-model-function.html#cb110-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         as.logical(valueAsFactor))</span></span>
+<span id="cb110-26"><a href="case-study-sir-model-function.html#cb110-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     if (na.rm) {</span></span>
+<span id="cb110-27"><a href="case-study-sir-model-function.html#cb110-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         return(df[!is.na(df[[value.name]]), ])</span></span>
+<span id="cb110-28"><a href="case-study-sir-model-function.html#cb110-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb110-29"><a href="case-study-sir-model-function.html#cb110-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     else {</span></span>
+<span id="cb110-30"><a href="case-study-sir-model-function.html#cb110-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         return(df)</span></span>
+<span id="cb110-31"><a href="case-study-sir-model-function.html#cb110-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     }</span></span>
+<span id="cb110-32"><a href="case-study-sir-model-function.html#cb110-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb110-33"><a href="case-study-sir-model-function.html#cb110-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x561ae2624720&gt;</span></span>
+<span id="cb110-34"><a href="case-study-sir-model-function.html#cb110-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:reshape2&gt;</span></span></code></pre></div>
+<p>References:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/11173683/how-can-i-read-the-source-code-for-an-r-function">stackoverflow article</a></li>
+<li><a href="https://www.r-project.org/doc/Rnews/Rnews_2006-4.pdf">Rnews bulletin: R Help Desk</a></li>
+</ul>
+<hr />
+<p>Going back to out model output visualization.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="case-study-sir-model-function.html#cb111-1" aria-hidden="true" tabindex="-1"></a>output_full<span class="ot">&lt;-</span> <span class="fu">melt</span>(output,<span class="at">id=</span><span class="st">&quot;time&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="case-study-sir-model-function.html#cb112-1" aria-hidden="true" tabindex="-1"></a>output_full<span class="sc">$</span>proportion<span class="ot">&lt;-</span> output_full<span class="sc">$</span>value<span class="sc">/</span><span class="fu">sum</span>(state_values)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="case-study-sir-model-function.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> output, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> I)) <span class="sc">+</span> </span>
+<span id="cb113-2"><a href="case-study-sir-model-function.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb113-3"><a href="case-study-sir-model-function.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time(days)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb113-4"><a href="case-study-sir-model-function.html#cb113-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of Infected&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb113-5"><a href="case-study-sir-model-function.html#cb113-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="st">&quot;SIR Model: prevalence of infection&quot;</span>)</span></code></pre></div>
+<p><img src="bookclub-advr_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="case-study-sir-model-function.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(output_full, <span class="fu">aes</span>(time, proportion, <span class="at">color =</span> variable, <span class="at">group =</span> variable)) <span class="sc">+</span> </span>
+<span id="cb114-2"><a href="case-study-sir-model-function.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb114-3"><a href="case-study-sir-model-function.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time(days)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb114-4"><a href="case-study-sir-model-function.html#cb114-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Prevalence&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb114-5"><a href="case-study-sir-model-function.html#cb114-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Compartment&quot;</span>, <span class="at">title =</span> <span class="st">&quot;SIR Model&quot;</span>)</span></code></pre></div>
+<p><img src="bookclub-advr_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<hr />
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="meeting-videos-14.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="slide-1-10.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="more-about-functions-insights.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="meeting-videos-5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -623,7 +856,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/16_Trade-offs.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/06_Functions.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 16 Trade-offs | Advanced R Book Club</title>
+  <title>6.5 More about functions insights | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 16 Trade-offs | Advanced R Book Club" />
+  <meta property="og:title" content="6.5 More about functions insights | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 16 Trade-offs | Advanced R Book Club" />
+  <meta name="twitter:title" content="6.5 More about functions insights | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="meeting-videos-14.html"/>
-<link rel="next" href="slide-1-10.html"/>
+<link rel="prev" href="function-composition.html"/>
+<link rel="next" href="case-study-sir-model-function.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -579,20 +579,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trade-offs" class="section level1 hasAnchor" number="16">
-<h1><span class="header-section-number">Chapter 16</span> Trade-offs<a href="trade-offs.html#trade-offs" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Learning objectives:</strong></p>
+<div id="more-about-functions-insights" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> More about functions insights<a href="more-about-functions-insights.html#more-about-functions-insights" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="lexical-scoping" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Lexical scoping<a href="more-about-functions-insights.html#lexical-scoping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Rules</strong></p>
 <ul>
-<li>THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY</li>
+<li>Name masking</li>
+<li>Functions versus variables</li>
+<li>A fresh start</li>
+<li>Dynamic lookup</li>
 </ul>
+<p><strong>Debugging</strong></p>
+<p>This function</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="more-about-functions-insights.html#cb88-1" aria-hidden="true" tabindex="-1"></a>g12 <span class="ot">&lt;-</span> <span class="cf">function</span>() x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb88-2"><a href="more-about-functions-insights.html#cb88-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb88-3"><a href="more-about-functions-insights.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="fu">g12</span>()</span>
+<span id="cb88-4"><a href="more-about-functions-insights.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 16</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="more-about-functions-insights.html#cb89-1" aria-hidden="true" tabindex="-1"></a>codetools<span class="sc">::</span><span class="fu">findGlobals</span>(g12)</span>
+<span id="cb89-2"><a href="more-about-functions-insights.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;+&quot; &quot;x&quot;</span></span></code></pre></div>
+<p>You can change the function’s environment to an environment which contains nothing:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="more-about-functions-insights.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># environment(g12) &lt;- emptyenv()</span></span>
+<span id="cb90-2"><a href="more-about-functions-insights.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="co"># g12()</span></span>
+<span id="cb90-3"><a href="more-about-functions-insights.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Error in x + 1 : could not find function &quot;+&quot;</span></span></code></pre></div>
+</div>
+<div id="dot-dot-dot" class="section level3 hasAnchor" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> … (dot-dot-dot)<a href="more-about-functions-insights.html#dot-dot-dot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Example</strong></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="more-about-functions-insights.html#cb91-1" aria-hidden="true" tabindex="-1"></a>i01 <span class="ot">&lt;-</span> <span class="cf">function</span>(y, z) {</span>
+<span id="cb91-2"><a href="more-about-functions-insights.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">y =</span> y, <span class="at">z =</span> z)</span>
+<span id="cb91-3"><a href="more-about-functions-insights.html#cb91-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb91-4"><a href="more-about-functions-insights.html#cb91-4" aria-hidden="true" tabindex="-1"></a>i02 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb91-5"><a href="more-about-functions-insights.html#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">i01</span>(...)</span>
+<span id="cb91-6"><a href="more-about-functions-insights.html#cb91-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb91-7"><a href="more-about-functions-insights.html#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">i02</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">2</span>, <span class="at">z =</span> <span class="dv">3</span>))</span>
+<span id="cb91-8"><a href="more-about-functions-insights.html#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
+<span id="cb91-9"><a href="more-about-functions-insights.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ y: num 2</span></span>
+<span id="cb91-10"><a href="more-about-functions-insights.html#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ z: num 3</span></span>
+<span id="cb91-11"><a href="more-about-functions-insights.html#cb91-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
+<span id="cb91-12"><a href="more-about-functions-insights.html#cb91-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ y: num 2</span></span>
+<span id="cb91-13"><a href="more-about-functions-insights.html#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ z: num 3</span></span></code></pre></div>
+</div>
+<div id="exiting-a-function" class="section level3 hasAnchor" number="6.5.3">
+<h3><span class="header-section-number">6.5.3</span> Exiting a function<a href="more-about-functions-insights.html#exiting-a-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Implicit or explicit returns</p></li>
+<li><p>Invisibility (<code>&lt;-</code> most famous function that returns an invisible value)</p></li>
+<li><p><code>stop()</code> to stop a function with an error.</p></li>
+<li><p>Exit handlers</p></li>
+</ol>
+</div>
+<div id="function-forms" class="section level3 hasAnchor" number="6.5.4">
+<h3><span class="header-section-number">6.5.4</span> Function forms<a href="more-about-functions-insights.html#function-forms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<blockquote>
+<p>Everything that exists is an object.
+Everything that happens is a function call.
+— John Chambers</p>
+</blockquote>
+<p><img src="images/06_forms.png" /><!-- --></p>
+<hr />
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="meeting-videos-14.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="slide-1-10.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="function-composition.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="case-study-sir-model-function.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -623,7 +677,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/16_Trade-offs.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/06_Functions.Rmd",
 "text": "Edit"
 },
 "history": {
