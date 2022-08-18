@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Names and values | Advanced R Book Club</title>
+  <title>8.5 Custom conditions | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Names and values | Advanced R Book Club" />
+  <meta property="og:title" content="8.5 Custom conditions | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Names and values | Advanced R Book Club" />
+  <meta name="twitter:title" content="8.5 Custom conditions | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="meeting-videos.html"/>
-<link rel="next" href="slide-1.html"/>
+<link rel="prev" href="handling-conditions.html"/>
+<link rel="next" href="applications-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -608,20 +608,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="names-and-values" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Names and values<a href="names-and-values.html#names-and-values" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Learning objectives:</strong></p>
-<ul>
-<li>THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY</li>
-</ul>
+<div id="custom-conditions" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Custom conditions<a href="custom-conditions.html#custom-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="motivation" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> Motivation<a href="custom-conditions.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>base::log()</code> function provides a minimal error message.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="custom-conditions.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(letters)</span>
+<span id="cb137-2"><a href="custom-conditions.html#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in log(letters): non-numeric argument to mathematical function</span></span>
+<span id="cb137-3"><a href="custom-conditions.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">base =</span> letters)</span>
+<span id="cb137-4"><a href="custom-conditions.html#cb137-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in log(1:10, base = letters): non-numeric argument to mathematical function</span></span></code></pre></div>
+<p>One could make a more informative error message about which argument is problematic.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="custom-conditions.html#cb138-1" aria-hidden="true" tabindex="-1"></a>my_log <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)) {</span>
+<span id="cb138-2"><a href="custom-conditions.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb138-3"><a href="custom-conditions.html#cb138-3" aria-hidden="true" tabindex="-1"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="fu">paste0</span>(</span>
+<span id="cb138-4"><a href="custom-conditions.html#cb138-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;`x` must be a numeric vector; not &quot;</span>, <span class="fu">typeof</span>(x), <span class="st">&quot;.&quot;</span></span>
+<span id="cb138-5"><a href="custom-conditions.html#cb138-5" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb138-6"><a href="custom-conditions.html#cb138-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb138-7"><a href="custom-conditions.html#cb138-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(base)) {</span>
+<span id="cb138-8"><a href="custom-conditions.html#cb138-8" aria-hidden="true" tabindex="-1"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="fu">paste0</span>(</span>
+<span id="cb138-9"><a href="custom-conditions.html#cb138-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;`base` must be a numeric vector; not &quot;</span>, <span class="fu">typeof</span>(base), <span class="st">&quot;.&quot;</span></span>
+<span id="cb138-10"><a href="custom-conditions.html#cb138-10" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb138-11"><a href="custom-conditions.html#cb138-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb138-12"><a href="custom-conditions.html#cb138-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-13"><a href="custom-conditions.html#cb138-13" aria-hidden="true" tabindex="-1"></a>  base<span class="sc">::</span><span class="fu">log</span>(x, <span class="at">base =</span> base)</span>
+<span id="cb138-14"><a href="custom-conditions.html#cb138-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Consider the difference:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="custom-conditions.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_log</span>(letters)</span>
+<span id="cb139-2"><a href="custom-conditions.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `my_log()`:</span></span>
+<span id="cb139-3"><a href="custom-conditions.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! `x` must be a numeric vector; not character.</span></span>
+<span id="cb139-4"><a href="custom-conditions.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="fu">my_log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">base =</span> letters)</span>
+<span id="cb139-5"><a href="custom-conditions.html#cb139-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `my_log()`:</span></span>
+<span id="cb139-6"><a href="custom-conditions.html#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! `base` must be a numeric vector; not character.</span></span></code></pre></div>
+</div>
+<div id="signalling" class="section level3 hasAnchor" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Signalling<a href="custom-conditions.html#signalling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Create a helper function to describe errors:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="custom-conditions.html#cb140-1" aria-hidden="true" tabindex="-1"></a>abort_bad_argument <span class="ot">&lt;-</span> <span class="cf">function</span>(arg, must, <span class="at">not =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb140-2"><a href="custom-conditions.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  msg <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;`{arg}` must {must}&quot;</span>)</span>
+<span id="cb140-3"><a href="custom-conditions.html#cb140-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(not)) {</span>
+<span id="cb140-4"><a href="custom-conditions.html#cb140-4" aria-hidden="true" tabindex="-1"></a>    not <span class="ot">&lt;-</span> <span class="fu">typeof</span>(not)</span>
+<span id="cb140-5"><a href="custom-conditions.html#cb140-5" aria-hidden="true" tabindex="-1"></a>    msg <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{msg}; not {not}.&quot;</span>)</span>
+<span id="cb140-6"><a href="custom-conditions.html#cb140-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb140-7"><a href="custom-conditions.html#cb140-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb140-8"><a href="custom-conditions.html#cb140-8" aria-hidden="true" tabindex="-1"></a>  rlang<span class="sc">::</span><span class="fu">abort</span>(</span>
+<span id="cb140-9"><a href="custom-conditions.html#cb140-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;error_bad_argument&quot;</span>, <span class="co"># &lt;- this is the (error) class, I believe</span></span>
+<span id="cb140-10"><a href="custom-conditions.html#cb140-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">message =</span> msg, </span>
+<span id="cb140-11"><a href="custom-conditions.html#cb140-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">arg =</span> arg, </span>
+<span id="cb140-12"><a href="custom-conditions.html#cb140-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">must =</span> must, </span>
+<span id="cb140-13"><a href="custom-conditions.html#cb140-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">not =</span> not</span>
+<span id="cb140-14"><a href="custom-conditions.html#cb140-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb140-15"><a href="custom-conditions.html#cb140-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Rewrite the log function to use this helper function:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="custom-conditions.html#cb141-1" aria-hidden="true" tabindex="-1"></a>my_log <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)) {</span>
+<span id="cb141-2"><a href="custom-conditions.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb141-3"><a href="custom-conditions.html#cb141-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abort_bad_argument</span>(<span class="st">&quot;x&quot;</span>, <span class="at">must =</span> <span class="st">&quot;be numeric&quot;</span>, <span class="at">not =</span> x)</span>
+<span id="cb141-4"><a href="custom-conditions.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb141-5"><a href="custom-conditions.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(base)) {</span>
+<span id="cb141-6"><a href="custom-conditions.html#cb141-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abort_bad_argument</span>(<span class="st">&quot;base&quot;</span>, <span class="at">must =</span> <span class="st">&quot;be numeric&quot;</span>, <span class="at">not =</span> base)</span>
+<span id="cb141-7"><a href="custom-conditions.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb141-8"><a href="custom-conditions.html#cb141-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-9"><a href="custom-conditions.html#cb141-9" aria-hidden="true" tabindex="-1"></a>  base<span class="sc">::</span><span class="fu">log</span>(x, <span class="at">base =</span> base)</span>
+<span id="cb141-10"><a href="custom-conditions.html#cb141-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>See the result for the end user:</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="custom-conditions.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_log</span>(letters)</span>
+<span id="cb142-2"><a href="custom-conditions.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `abort_bad_argument()`:</span></span>
+<span id="cb142-3"><a href="custom-conditions.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! `x` must be numeric; not character.</span></span>
+<span id="cb142-4"><a href="custom-conditions.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">my_log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">base =</span> letters)</span>
+<span id="cb142-5"><a href="custom-conditions.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `abort_bad_argument()`:</span></span>
+<span id="cb142-6"><a href="custom-conditions.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! `base` must be numeric; not character.</span></span></code></pre></div>
+</div>
+<div id="handling" class="section level3 hasAnchor" number="8.5.3">
+<h3><span class="header-section-number">8.5.3</span> Handling<a href="custom-conditions.html#handling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use class of condition object to allow for different handling of different types of errors</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="custom-conditions.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb143-2"><a href="custom-conditions.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">error_bad_argument =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;bad_argument&quot;</span>,</span>
+<span id="cb143-3"><a href="custom-conditions.html#cb143-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(cnd) <span class="st">&quot;other error&quot;</span>,</span>
+<span id="cb143-4"><a href="custom-conditions.html#cb143-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">my_log</span>(<span class="st">&quot;a&quot;</span>)</span>
+<span id="cb143-5"><a href="custom-conditions.html#cb143-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb143-6"><a href="custom-conditions.html#cb143-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;bad_argument&quot;</span></span></code></pre></div>
+<p>But note that the first handler that matches any of the signal’s class, potentially in a vector of signal classes, will get control. So put the most specific handlers first.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="meeting-videos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="slide-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="handling-conditions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="applications-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -652,7 +726,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/02_Names_and_values.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/08_Conditions.Rmd",
 "text": "Edit"
 },
 "history": {

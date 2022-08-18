@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Names and values | Advanced R Book Club</title>
+  <title>8.3 Ignoring conditions | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Names and values | Advanced R Book Club" />
+  <meta property="og:title" content="8.3 Ignoring conditions | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Names and values | Advanced R Book Club" />
+  <meta name="twitter:title" content="8.3 Ignoring conditions | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="meeting-videos.html"/>
-<link rel="next" href="slide-1.html"/>
+<link rel="prev" href="signalling-conditions.html"/>
+<link rel="next" href="handling-conditions.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -608,20 +608,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="names-and-values" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Names and values<a href="names-and-values.html#names-and-values" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Learning objectives:</strong></p>
+<div id="ignoring-conditions" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Ignoring conditions<a href="ignoring-conditions.html#ignoring-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A few ways:</p>
 <ul>
-<li>THESE ARE NICE TO HAVE BUT NOT ABSOLUTELY NECESSARY</li>
+<li><code>try()</code></li>
+<li><code>suppressWarnings()</code></li>
+<li><code>suppressMessages()</code></li>
 </ul>
+<div id="try" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> <code>try()</code><a href="ignoring-conditions.html#try" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What it does:</p>
+<ul>
+<li>Displays error</li>
+<li>But continues execution after error</li>
+</ul>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="ignoring-conditions.html#cb125-1" aria-hidden="true" tabindex="-1"></a>bad_log <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb125-2"><a href="ignoring-conditions.html#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">try</span>(<span class="fu">log</span>(x))</span>
+<span id="cb125-3"><a href="ignoring-conditions.html#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span></span>
+<span id="cb125-4"><a href="ignoring-conditions.html#cb125-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb125-5"><a href="ignoring-conditions.html#cb125-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-6"><a href="ignoring-conditions.html#cb125-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bad_log</span>(<span class="st">&quot;bad&quot;</span>)</span>
+<span id="cb125-7"><a href="ignoring-conditions.html#cb125-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in log(x) : non-numeric argument to mathematical function</span></span>
+<span id="cb125-8"><a href="ignoring-conditions.html#cb125-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span></code></pre></div>
+<p>Better ways to react to/recover from errors:</p>
+<ol style="list-style-type: decimal">
+<li>Use <code>tryCatch()</code> to “catch” the error and perform a different action in the event of an error.</li>
+<li>Set a default value inside the call. See below.</li>
+</ol>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="ignoring-conditions.html#cb126-1" aria-hidden="true" tabindex="-1"></a>default <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb126-2"><a href="ignoring-conditions.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(default <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;possibly-bad-input.csv&quot;</span>), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb126-3"><a href="ignoring-conditions.html#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in file(file, &quot;rt&quot;): cannot open file &#39;possibly-bad-input.csv&#39;: No such</span></span>
+<span id="cb126-4"><a href="ignoring-conditions.html#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; file or directory</span></span></code></pre></div>
+</div>
+<div id="suppresswarnings-suppressmessages" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> <code>suppressWarnings()</code>, <code>suppressMessages()</code><a href="ignoring-conditions.html#suppresswarnings-suppressmessages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What it does:</p>
+<ul>
+<li>Supresses all warnings (messages)</li>
+</ul>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="ignoring-conditions.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="co"># suppress warnings (from our `warn()` function above)</span></span>
+<span id="cb127-2"><a href="ignoring-conditions.html#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">warn</span>())</span>
+<span id="cb127-3"><a href="ignoring-conditions.html#cb127-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-4"><a href="ignoring-conditions.html#cb127-4" aria-hidden="true" tabindex="-1"></a><span class="co"># suppress messages</span></span>
+<span id="cb127-5"><a href="ignoring-conditions.html#cb127-5" aria-hidden="true" tabindex="-1"></a>many_messages <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb127-6"><a href="ignoring-conditions.html#cb127-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;Message 1&quot;</span>)</span>
+<span id="cb127-7"><a href="ignoring-conditions.html#cb127-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;Message 2&quot;</span>)</span>
+<span id="cb127-8"><a href="ignoring-conditions.html#cb127-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;Message 3&quot;</span>)</span>
+<span id="cb127-9"><a href="ignoring-conditions.html#cb127-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb127-10"><a href="ignoring-conditions.html#cb127-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-11"><a href="ignoring-conditions.html#cb127-11" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">many_messages</span>())</span></code></pre></div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="meeting-videos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="slide-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="signalling-conditions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="handling-conditions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -652,7 +697,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/02_Names_and_values.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/08_Conditions.Rmd",
 "text": "Edit"
 },
 "history": {
