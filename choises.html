@@ -638,8 +638,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>if()</code> and <code>ifelse()</code></li>
 </ul>
 <center>
-<div id="htmlwidget-f7f0003ca9eb59c95da7" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f7f0003ca9eb59c95da7">{"x":{"diagram":"\ngraph TD\nA{if}-->B(condition)\n     B-->C(true action)\n     \nD{if}-->E(condition)\n     E-->F(true action)\nE-->G((else))\n     G-->H(false action)\n     \nI{ifelse}-->L(condition)\n     L-->M(true action)\n     L-->N(false action)\n\nstyle A fill:#f96\nstyle D fill:#f96\nstyle I fill:#f96\nstyle G fill:#f96\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-501ad7744d7a02a33301" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-501ad7744d7a02a33301">{"x":{"diagram":"\ngraph TD\nA{if}-->B(condition)\n     B-->C(true action)\n     \nD{if}-->E(condition)\n     E-->F(true action)\nE-->G((else))\n     G-->H(false action)\n     \nI{ifelse}-->L(condition)\n     L-->M(true action)\n     L-->N(false action)\n\nstyle A fill:#f96\nstyle D fill:#f96\nstyle I fill:#f96\nstyle G fill:#f96\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
 </center>
 <p><code>if (condition) true_action</code>
 <br>
@@ -676,8 +676,8 @@ source: <a href="https://stackoverflow.com/questions/50646133/dplyr-if-else-vs-b
 </ul>
 <p>It allows you to vectorise multiple <code>if_else()</code> statements</p>
 <center>
-<div id="htmlwidget-6ad8a9ce82442bc90ec2" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6ad8a9ce82442bc90ec2">{"x":{"diagram":"\n   graph TD\n\nI{ifelse}-->L(condition)\n\nA{case_when}-->B(condition)\n\nC{switch}-->D((list of conditions))\n\nstyle I fill:#f27,stroke:#f66,stroke-width:3px\nstyle A fill:#f99,stroke:#f66,stroke-width:3px\nstyle C fill:#f96,stroke:#f66,stroke-width:3px\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle D fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1d810dc2ebfc43bda7be" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1d810dc2ebfc43bda7be">{"x":{"diagram":"\n   graph TD\n\nI{ifelse}-->L(condition)\n\nA{case_when}-->B(condition)\n\nC{switch}-->D((list of conditions))\n\nstyle I fill:#f27,stroke:#f66,stroke-width:3px\nstyle A fill:#f99,stroke:#f66,stroke-width:3px\nstyle C fill:#f96,stroke:#f66,stroke-width:3px\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle D fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
 </center>
 <p>Finally, the last tool just mentioned is <code>switch()</code>, here is an example on how to use it:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="choises.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(stats)</span>
