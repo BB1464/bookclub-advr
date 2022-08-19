@@ -375,8 +375,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="introduction-3.html"><a href="introduction-3.html#benefits"><i class="fa fa-check"></i>Benefits</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="map.html"><a href="map.html"><i class="fa fa-check"></i><b>9.2</b> Map</a></li>
-<li class="chapter" data-level="" data-path="benefit-of-using-the-map-function-in-purrr.html"><a href="benefit-of-using-the-map-function-in-purrr.html"><i class="fa fa-check"></i><strong>Benefit of using the map function in purrr</strong></a></li>
-<li class="chapter" data-level="" data-path="atomic-vectors-2.html"><a href="atomic-vectors-2.html"><i class="fa fa-check"></i><strong>Atomic vectors</strong></a></li>
+<li class="chapter" data-level="" data-path="benefit-of-using-the-map-function-in-purrr.html"><a href="benefit-of-using-the-map-function-in-purrr.html"><i class="fa fa-check"></i>Benefit of using the map function in purrr</a></li>
+<li class="chapter" data-level="" data-path="atomic-vectors-2.html"><a href="atomic-vectors-2.html"><i class="fa fa-check"></i>Atomic vectors</a></li>
 <li class="chapter" data-level="" data-path="anonymous-functions-and-shortcuts.html"><a href="anonymous-functions-and-shortcuts.html"><i class="fa fa-check"></i>Anonymous functions and shortcuts</a></li>
 <li class="chapter" data-level="" data-path="modify.html"><a href="modify.html"><i class="fa fa-check"></i>Modify</a></li>
 <li class="chapter" data-level="9.3" data-path="purrr-style.html"><a href="purrr-style.html"><i class="fa fa-check"></i><b>9.3</b> <code>purrr</code> style</a></li>
@@ -638,8 +638,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>if()</code> and <code>ifelse()</code></li>
 </ul>
 <center>
-<div id="htmlwidget-47520a96a52d7f8af694" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-47520a96a52d7f8af694">{"x":{"diagram":"\ngraph TD\nA{if}-->B(condition)\n     B-->C(true action)\n     \nD{if}-->E(condition)\n     E-->F(true action)\nE-->G((else))\n     G-->H(false action)\n     \nI{ifelse}-->L(condition)\n     L-->M(true action)\n     L-->N(false action)\n\nstyle A fill:#f96\nstyle D fill:#f96\nstyle I fill:#f96\nstyle G fill:#f96\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f7f0003ca9eb59c95da7" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f7f0003ca9eb59c95da7">{"x":{"diagram":"\ngraph TD\nA{if}-->B(condition)\n     B-->C(true action)\n     \nD{if}-->E(condition)\n     E-->F(true action)\nE-->G((else))\n     G-->H(false action)\n     \nI{ifelse}-->L(condition)\n     L-->M(true action)\n     L-->N(false action)\n\nstyle A fill:#f96\nstyle D fill:#f96\nstyle I fill:#f96\nstyle G fill:#f96\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
 </center>
 <p><code>if (condition) true_action</code>
 <br>
@@ -676,8 +676,8 @@ source: <a href="https://stackoverflow.com/questions/50646133/dplyr-if-else-vs-b
 </ul>
 <p>It allows you to vectorise multiple <code>if_else()</code> statements</p>
 <center>
-<div id="htmlwidget-928a30bbff270c995a18" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-928a30bbff270c995a18">{"x":{"diagram":"\n   graph TD\n\nI{ifelse}-->L(condition)\n\nA{case_when}-->B(condition)\n\nC{switch}-->D((list of conditions))\n\nstyle I fill:#f27,stroke:#f66,stroke-width:3px\nstyle A fill:#f99,stroke:#f66,stroke-width:3px\nstyle C fill:#f96,stroke:#f66,stroke-width:3px\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle D fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6ad8a9ce82442bc90ec2" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6ad8a9ce82442bc90ec2">{"x":{"diagram":"\n   graph TD\n\nI{ifelse}-->L(condition)\n\nA{case_when}-->B(condition)\n\nC{switch}-->D((list of conditions))\n\nstyle I fill:#f27,stroke:#f66,stroke-width:3px\nstyle A fill:#f99,stroke:#f66,stroke-width:3px\nstyle C fill:#f96,stroke:#f66,stroke-width:3px\nstyle L fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\nstyle D fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
 </center>
 <p>Finally, the last tool just mentioned is <code>switch()</code>, here is an example on how to use it:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="choises.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(stats)</span>
