@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.5 Function factory applications | Advanced R Book Club</title>
+  <title>11.1 Introduction | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.5 Function factory applications | Advanced R Book Club" />
+  <meta property="og:title" content="11.1 Introduction | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.5 Function factory applications | Advanced R Book Club" />
+  <meta name="twitter:title" content="11.1 Introduction | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="non-obvious-combinations.html"/>
-<link rel="next" href="meeting-videos-9.html"/>
+<link rel="prev" href="function-operators.html"/>
+<link rel="next" href="definition-and-practical-examples.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -651,62 +651,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="function-factory-applications" class="section level2 hasAnchor" number="10.5">
-<h2><span class="header-section-number">10.5</span> Function factory applications<a href="function-factory-applications.html#function-factory-applications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Combine functionals and function factories to turn data into many functions.</p>
-<div id="function-factories-functionals" class="section level3 hasAnchor" number="10.5.1">
-<h3><span class="header-section-number">10.5.1</span> Function factories + functionals<a href="function-factory-applications.html#function-factories-functionals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="function-factory-applications.html#cb207-1" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb207-2"><a href="function-factory-applications.html#cb207-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">square =</span> <span class="dv">2</span>, </span>
-<span id="cb207-3"><a href="function-factory-applications.html#cb207-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cube =</span> <span class="dv">3</span>, </span>
-<span id="cb207-4"><a href="function-factory-applications.html#cb207-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">root =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, </span>
-<span id="cb207-5"><a href="function-factory-applications.html#cb207-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cuberoot =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, </span>
-<span id="cb207-6"><a href="function-factory-applications.html#cb207-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">reciprocal =</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb207-7"><a href="function-factory-applications.html#cb207-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb207-8"><a href="function-factory-applications.html#cb207-8" aria-hidden="true" tabindex="-1"></a>funs <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(names, power1)</span>
-<span id="cb207-9"><a href="function-factory-applications.html#cb207-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-10"><a href="function-factory-applications.html#cb207-10" aria-hidden="true" tabindex="-1"></a>funs<span class="sc">$</span><span class="fu">root</span>(<span class="dv">64</span>)</span>
-<span id="cb207-11"><a href="function-factory-applications.html#cb207-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
-<span id="cb207-12"><a href="function-factory-applications.html#cb207-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
-<span id="cb207-13"><a href="function-factory-applications.html#cb207-13" aria-hidden="true" tabindex="-1"></a>funs<span class="sc">$</span>root</span>
-<span id="cb207-14"><a href="function-factory-applications.html#cb207-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x) {</span></span>
-<span id="cb207-15"><a href="function-factory-applications.html#cb207-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     x ^ exp</span></span>
-<span id="cb207-16"><a href="function-factory-applications.html#cb207-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
-<span id="cb207-17"><a href="function-factory-applications.html#cb207-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x560d72279110&gt;</span></span>
-<span id="cb207-18"><a href="function-factory-applications.html#cb207-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x560d7226f7d8&gt;</span></span>
-<span id="cb207-19"><a href="function-factory-applications.html#cb207-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x) {</span></span>
-<span id="cb207-20"><a href="function-factory-applications.html#cb207-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     x ^ exp</span></span>
-<span id="cb207-21"><a href="function-factory-applications.html#cb207-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
-<span id="cb207-22"><a href="function-factory-applications.html#cb207-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x7fe85512a410&gt;</span></span>
-<span id="cb207-23"><a href="function-factory-applications.html#cb207-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: 0x7fe85b21f190&gt;</span></span></code></pre></div>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="function-factory-applications.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(funs, <span class="fu">root</span>(<span class="dv">100</span>))</span>
-<span id="cb208-2"><a href="function-factory-applications.html#cb208-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span>
-<span id="cb208-3"><a href="function-factory-applications.html#cb208-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span></code></pre></div>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="function-factory-applications.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(funs)</span>
-<span id="cb209-2"><a href="function-factory-applications.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked _by_ .GlobalEnv:</span></span>
-<span id="cb209-3"><a href="function-factory-applications.html#cb209-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb209-4"><a href="function-factory-applications.html#cb209-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     cube, square</span></span>
-<span id="cb209-5"><a href="function-factory-applications.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked _by_ .GlobalEnv:</span></span>
-<span id="cb209-6"><a href="function-factory-applications.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb209-7"><a href="function-factory-applications.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     cube, square</span></span>
-<span id="cb209-8"><a href="function-factory-applications.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="fu">root</span>(<span class="dv">100</span>)</span>
-<span id="cb209-9"><a href="function-factory-applications.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span>
-<span id="cb209-10"><a href="function-factory-applications.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span>
-<span id="cb209-11"><a href="function-factory-applications.html#cb209-11" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(funs)</span></code></pre></div>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="function-factory-applications.html#cb210-1" aria-hidden="true" tabindex="-1"></a>rlang<span class="sc">::</span><span class="fu">env_bind</span>(<span class="fu">globalenv</span>(), <span class="sc">!!!</span>funs)</span>
-<span id="cb210-2"><a href="function-factory-applications.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="fu">root</span>(<span class="dv">100</span>)</span>
-<span id="cb210-3"><a href="function-factory-applications.html#cb210-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span>
-<span id="cb210-4"><a href="function-factory-applications.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10</span></span></code></pre></div>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="function-factory-applications.html#cb211-1" aria-hidden="true" tabindex="-1"></a>rlang<span class="sc">::</span><span class="fu">env_unbind</span>(<span class="fu">globalenv</span>(), <span class="fu">names</span>(funs))</span></code></pre></div>
-</div>
+<div id="introduction-5" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Introduction<a href="introduction-5.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter we’ll learn how to use <strong>function operator</strong> as a case of <strong>function factories</strong>.</p>
+<p>And we’ll see a case study about how to download many web pages using a function operator.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="non-obvious-combinations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="meeting-videos-9.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="function-operators.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="definition-and-practical-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -737,7 +693,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/10_Function_factories.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/11_Function_operators.Rmd",
 "text": "Edit"
 },
 "history": {
