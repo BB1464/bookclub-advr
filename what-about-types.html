@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>24.2 Meeting Videos | Advanced R Book Club</title>
+  <title>12.5 What about types? | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="24.2 Meeting Videos | Advanced R Book Club" />
+  <meta property="og:title" content="12.5 What about types? | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="24.2 Meeting Videos | Advanced R Book Club" />
+  <meta name="twitter:title" content="12.5 What about types? | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="slide-1-13.html"/>
-<link rel="next" href="rewriting-r-code-in-c.html"/>
+<link rel="prev" href="how-can-you-tell-if-an-object-is-base-or-oop.html"/>
+<link rel="next" href="be-careful-about-the-numeric-type.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -675,53 +675,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="meeting-videos-23" class="section level2 hasAnchor" number="24.2">
-<h2><span class="header-section-number">24.2</span> Meeting Videos<a href="meeting-videos-23.html#meeting-videos-23" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="cohort-1-23" class="section level3 hasAnchor" number="24.2.1">
-<h3><span class="header-section-number">24.2.1</span> Cohort 1<a href="meeting-videos-23.html#cohort-1-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>(no video)</p>
+<div id="what-about-types" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> What about types?<a href="what-about-types.html#what-about-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Only OO objects have a “class” attribute, but every object–whether base or OO–has class</p>
+<div id="vectors-1" class="section level3 hasAnchor" number="12.5.1">
+<h3><span class="header-section-number">12.5.1</span> Vectors<a href="what-about-types.html#vectors-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="what-about-types.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb224-2"><a href="what-about-types.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;NULL&quot;</span></span>
+<span id="cb224-3"><a href="what-about-types.html#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</span>
+<span id="cb224-4"><a href="what-about-types.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;character&quot;</span></span>
+<span id="cb224-5"><a href="what-about-types.html#cb224-5" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(1L)</span>
+<span id="cb224-6"><a href="what-about-types.html#cb224-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;integer&quot;</span></span>
+<span id="cb224-7"><a href="what-about-types.html#cb224-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(1i)</span>
+<span id="cb224-8"><a href="what-about-types.html#cb224-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;complex&quot;</span></span></code></pre></div>
 </div>
-<div id="cohort-2-23" class="section level3 hasAnchor" number="24.2.2">
-<h3><span class="header-section-number">24.2.2</span> Cohort 2<a href="meeting-videos-23.html#cohort-2-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/fSdAqlkeq6I" width="100%" height="400px" data-external="1">
-</iframe>
+<div id="functions-2" class="section level3 hasAnchor" number="12.5.2">
+<h3><span class="header-section-number">12.5.2</span> Functions<a href="what-about-types.html#functions-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="what-about-types.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;normal&quot; function</span></span>
+<span id="cb225-2"><a href="what-about-types.html#cb225-2" aria-hidden="true" tabindex="-1"></a>my_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { x <span class="sc">+</span> <span class="dv">1</span> }</span>
+<span id="cb225-3"><a href="what-about-types.html#cb225-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(my_fun)</span>
+<span id="cb225-4"><a href="what-about-types.html#cb225-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;closure&quot;</span></span>
+<span id="cb225-5"><a href="what-about-types.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="co"># internal function</span></span>
+<span id="cb225-6"><a href="what-about-types.html#cb225-6" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="st">`</span><span class="at">[</span><span class="st">`</span>)</span>
+<span id="cb225-7"><a href="what-about-types.html#cb225-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;special&quot;</span></span>
+<span id="cb225-8"><a href="what-about-types.html#cb225-8" aria-hidden="true" tabindex="-1"></a><span class="co"># primitive function</span></span>
+<span id="cb225-9"><a href="what-about-types.html#cb225-9" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(sum)    </span>
+<span id="cb225-10"><a href="what-about-types.html#cb225-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;builtin&quot;</span></span></code></pre></div>
 </div>
-<div id="cohort-3-23" class="section level3 hasAnchor" number="24.2.3">
-<h3><span class="header-section-number">24.2.3</span> Cohort 3<a href="meeting-videos-23.html#cohort-3-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/yCkvUcT7wW8" width="100%" height="400px" data-external="1">
-</iframe>
+<div id="environments-1" class="section level3 hasAnchor" number="12.5.3">
+<h3><span class="header-section-number">12.5.3</span> Environments<a href="what-about-types.html#environments-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="what-about-types.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">globalenv</span>())</span>
+<span id="cb226-2"><a href="what-about-types.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;environment&quot;</span></span></code></pre></div>
 </div>
-<div id="cohort-4-23" class="section level3 hasAnchor" number="24.2.4">
-<h3><span class="header-section-number">24.2.4</span> Cohort 4<a href="meeting-videos-23.html#cohort-4-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/LCaqvuv3JNg" width="100%" height="400px" data-external="1">
-</iframe>
+<div id="s4" class="section level3 hasAnchor" number="12.5.4">
+<h3><span class="header-section-number">12.5.4</span> S4<a href="what-about-types.html#s4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="what-about-types.html#cb227-1" aria-hidden="true" tabindex="-1"></a>mle_obj <span class="ot">&lt;-</span> stats4<span class="sc">::</span><span class="fu">mle</span>(<span class="cf">function</span>(<span class="at">x =</span> <span class="dv">1</span>) (x <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb227-2"><a href="what-about-types.html#cb227-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mle_obj)</span>
+<span id="cb227-3"><a href="what-about-types.html#cb227-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;S4&quot;</span></span></code></pre></div>
 </div>
-<div id="cohort-5-23" class="section level3 hasAnchor" number="24.2.5">
-<h3><span class="header-section-number">24.2.5</span> Cohort 5<a href="meeting-videos-23.html#cohort-5-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/pOaiDK7J7EE" width="100%" height="400px" data-external="1">
-</iframe>
-</div>
-<div id="cohort-6-23" class="section level3 hasAnchor" number="24.2.6">
-<h3><span class="header-section-number">24.2.6</span> Cohort 6<a href="meeting-videos-23.html#cohort-6-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/URL" width="100%" height="400px" data-external="1">
-</iframe>
-<details>
-<summary>
-Meeting chat log
-</summary>
-<pre><code>LOG</code></pre>
-</details>
-
+<div id="language-components" class="section level3 hasAnchor" number="12.5.5">
+<h3><span class="header-section-number">12.5.5</span> Language components<a href="what-about-types.html#language-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="what-about-types.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">quote</span>(a))</span>
+<span id="cb228-2"><a href="what-about-types.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;symbol&quot;</span></span>
+<span id="cb228-3"><a href="what-about-types.html#cb228-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">quote</span>(a <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb228-4"><a href="what-about-types.html#cb228-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;language&quot;</span></span>
+<span id="cb228-5"><a href="what-about-types.html#cb228-5" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fu">formals</span>(my_fun))</span>
+<span id="cb228-6"><a href="what-about-types.html#cb228-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;pairlist&quot;</span></span></code></pre></div>
 </div>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="slide-1-13.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rewriting-r-code-in-c.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="how-can-you-tell-if-an-object-is-base-or-oop.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="be-careful-about-the-numeric-type.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -752,7 +760,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/24_Improving_performance.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/12_Base_types.Rmd",
 "text": "Edit"
 },
 "history": {

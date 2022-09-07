@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>24.2 Meeting Videos | Advanced R Book Club</title>
+  <title>12.4 How can you tell if an object is base or OOP? | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="24.2 Meeting Videos | Advanced R Book Club" />
+  <meta property="og:title" content="12.4 How can you tell if an object is base or OOP? | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="24.2 Meeting Videos | Advanced R Book Club" />
+  <meta name="twitter:title" content="12.4 How can you tell if an object is base or OOP? | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="slide-1-13.html"/>
-<link rel="next" href="rewriting-r-code-in-c.html"/>
+<link rel="prev" href="what-about-oop-in-r.html"/>
+<link rel="next" href="what-about-types.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -675,53 +675,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="meeting-videos-23" class="section level2 hasAnchor" number="24.2">
-<h2><span class="header-section-number">24.2</span> Meeting Videos<a href="meeting-videos-23.html#meeting-videos-23" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="cohort-1-23" class="section level3 hasAnchor" number="24.2.1">
-<h3><span class="header-section-number">24.2.1</span> Cohort 1<a href="meeting-videos-23.html#cohort-1-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>(no video)</p>
+<div id="how-can-you-tell-if-an-object-is-base-or-oop" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> How can you tell if an object is base or OOP?<a href="how-can-you-tell-if-an-object-is-base-or-oop.html#how-can-you-tell-if-an-object-is-base-or-oop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="functions-1" class="section level3 hasAnchor" number="12.4.1">
+<h3><span class="header-section-number">12.4.1</span> Functions<a href="how-can-you-tell-if-an-object-is-base-or-oop.html#functions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Two functions:</p>
+<ul>
+<li><code>base::is.object()</code>, which yields TRUE/FALSE about whether is OOP object</li>
+<li><code>sloop::otype()</code>, which says what type of object type: <code>"base"</code>, <code>"S3"</code>, etc.</li>
+</ul>
+<p>An few examples:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 1: a base object</span></span>
+<span id="cb222-2"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb222-3"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb222-4"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-4" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">otype</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb222-5"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;base&quot;</span></span>
+<span id="cb222-6"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-7"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 2: an OO object</span></span>
+<span id="cb222-8"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-8" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(mtcars)</span>
+<span id="cb222-9"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb222-10"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-10" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">otype</span>(mtcars)</span>
+<span id="cb222-11"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb222-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;S3&quot;</span></span></code></pre></div>
 </div>
-<div id="cohort-2-23" class="section level3 hasAnchor" number="24.2.2">
-<h3><span class="header-section-number">24.2.2</span> Cohort 2<a href="meeting-videos-23.html#cohort-2-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/fSdAqlkeq6I" width="100%" height="400px" data-external="1">
-</iframe>
-</div>
-<div id="cohort-3-23" class="section level3 hasAnchor" number="24.2.3">
-<h3><span class="header-section-number">24.2.3</span> Cohort 3<a href="meeting-videos-23.html#cohort-3-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/yCkvUcT7wW8" width="100%" height="400px" data-external="1">
-</iframe>
-</div>
-<div id="cohort-4-23" class="section level3 hasAnchor" number="24.2.4">
-<h3><span class="header-section-number">24.2.4</span> Cohort 4<a href="meeting-videos-23.html#cohort-4-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/LCaqvuv3JNg" width="100%" height="400px" data-external="1">
-</iframe>
-</div>
-<div id="cohort-5-23" class="section level3 hasAnchor" number="24.2.5">
-<h3><span class="header-section-number">24.2.5</span> Cohort 5<a href="meeting-videos-23.html#cohort-5-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/pOaiDK7J7EE" width="100%" height="400px" data-external="1">
-</iframe>
-</div>
-<div id="cohort-6-23" class="section level3 hasAnchor" number="24.2.6">
-<h3><span class="header-section-number">24.2.6</span> Cohort 6<a href="meeting-videos-23.html#cohort-6-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<iframe src="https://www.youtube.com/embed/URL" width="100%" height="400px" data-external="1">
-</iframe>
-<details>
-<summary>
-Meeting chat log
-</summary>
-<pre><code>LOG</code></pre>
-</details>
-
+<div id="class" class="section level3 hasAnchor" number="12.4.2">
+<h3><span class="header-section-number">12.4.2</span> Class<a href="how-can-you-tell-if-an-object-is-base-or-oop.html#class" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>OO objects have a “class” attribute:</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base object has no class</span></span>
+<span id="cb223-2"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb223-3"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
+<span id="cb223-4"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb223-5"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-5" aria-hidden="true" tabindex="-1"></a><span class="co"># OO object has one or more class</span></span>
+<span id="cb223-6"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(mtcars, <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb223-7"><a href="how-can-you-tell-if-an-object-is-base-or-oop.html#cb223-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;data.frame&quot;</span></span></code></pre></div>
 </div>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="slide-1-13.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rewriting-r-code-in-c.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="what-about-oop-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="what-about-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -752,7 +746,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/24_Improving_performance.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/12_Base_types.Rmd",
 "text": "Edit"
 },
 "history": {
