@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.4 Function composition | Advanced R Book Club</title>
+  <title>13.1 Basics | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.4 Function composition | Advanced R Book Club" />
+  <meta property="og:title" content="13.1 Basics | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.4 Function composition | Advanced R Book Club" />
+  <meta name="twitter:title" content="13.1 Basics | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="anonymous-functions.html"/>
-<link rel="next" href="more-about-functions-insights.html"/>
+<link rel="prev" href="s3.html"/>
+<link rel="next" href="classes.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -696,33 +696,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="function-composition" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Function composition<a href="function-composition.html#function-composition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="function-composition.html#cb85-1" aria-hidden="true" tabindex="-1"></a>square <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb85-2"><a href="function-composition.html#cb85-2" aria-hidden="true" tabindex="-1"></a>deviation <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
-<span id="cb85-3"><a href="function-composition.html#cb85-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb85-4"><a href="function-composition.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(<span class="fu">square</span>(<span class="fu">deviation</span>(x))))</span>
-<span id="cb85-5"><a href="function-composition.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2812728</span></span></code></pre></div>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="function-composition.html#cb86-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">deviation</span>(x)</span>
-<span id="cb86-2"><a href="function-composition.html#cb86-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">square</span>(out)</span>
-<span id="cb86-3"><a href="function-composition.html#cb86-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">mean</span>(out)</span>
-<span id="cb86-4"><a href="function-composition.html#cb86-4" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(out)</span>
-<span id="cb86-5"><a href="function-composition.html#cb86-5" aria-hidden="true" tabindex="-1"></a>out</span>
-<span id="cb86-6"><a href="function-composition.html#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2812728</span></span></code></pre></div>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="function-composition.html#cb87-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span></span>
-<span id="cb87-2"><a href="function-composition.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deviation</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb87-3"><a href="function-composition.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">square</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb87-4"><a href="function-composition.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb87-5"><a href="function-composition.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>()</span>
-<span id="cb87-6"><a href="function-composition.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2812728</span></span></code></pre></div>
+<div id="basics" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Basics<a href="basics.html#basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Has class</li>
+<li>Uses a generic function to decide on method
+<ul>
+<li>method = implementation for a specific class</li>
+<li>dispatch = process of searching for right method</li>
+</ul></li>
+</ul>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="anonymous-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="more-about-functions-insights.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="s3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -753,7 +744,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/06_Functions.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/13_S3.Rmd",
 "text": "Edit"
 },
 "history": {

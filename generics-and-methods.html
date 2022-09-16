@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>25.1 SLIDE 1 | Advanced R Book Club</title>
+  <title>13.3 Generics and methods | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="25.1 SLIDE 1 | Advanced R Book Club" />
+  <meta property="og:title" content="13.3 Generics and methods | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="25.1 SLIDE 1 | Advanced R Book Club" />
+  <meta name="twitter:title" content="13.3 Generics and methods | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -23,15 +23,15 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2022-09-07" />
+<meta name="date" content="2022-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="rewriting-r-code-in-c.html"/>
-<link rel="next" href="meeting-videos-24.html"/>
+<link rel="prev" href="classes.html"/>
+<link rel="next" href="inheritance.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -488,20 +488,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13" data-path="s3.html"><a href="s3.html"><i class="fa fa-check"></i><b>13</b> S3</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="slide-1-2.html"><a href="slide-1-2.html"><i class="fa fa-check"></i><b>13.1</b> SLIDE 1</a></li>
-<li class="chapter" data-level="13.2" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html"><i class="fa fa-check"></i><b>13.2</b> Meeting Videos</a>
+<li class="chapter" data-level="13.1" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>13.1</b> Basics</a></li>
+<li class="chapter" data-level="13.2" data-path="classes.html"><a href="classes.html"><i class="fa fa-check"></i><b>13.2</b> Classes</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-1-12"><i class="fa fa-check"></i><b>13.2.1</b> Cohort 1</a></li>
-<li class="chapter" data-level="13.2.2" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-2-12"><i class="fa fa-check"></i><b>13.2.2</b> Cohort 2</a></li>
-<li class="chapter" data-level="13.2.3" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-3-12"><i class="fa fa-check"></i><b>13.2.3</b> Cohort 3</a></li>
-<li class="chapter" data-level="13.2.4" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-4-12"><i class="fa fa-check"></i><b>13.2.4</b> Cohort 4</a></li>
-<li class="chapter" data-level="13.2.5" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-5-12"><i class="fa fa-check"></i><b>13.2.5</b> Cohort 5</a></li>
-<li class="chapter" data-level="13.2.6" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-6-12"><i class="fa fa-check"></i><b>13.2.6</b> Cohort 6</a></li>
+<li class="chapter" data-level="13.2.1" data-path="classes.html"><a href="classes.html#theory"><i class="fa fa-check"></i><b>13.2.1</b> Theory</a></li>
+<li class="chapter" data-level="13.2.2" data-path="classes.html"><a href="classes.html#practice"><i class="fa fa-check"></i><b>13.2.2</b> Practice</a></li>
+<li class="chapter" data-level="13.2.3" data-path="classes.html"><a href="classes.html#constructors"><i class="fa fa-check"></i><b>13.2.3</b> Constructors</a></li>
+<li class="chapter" data-level="13.2.4" data-path="classes.html"><a href="classes.html#validators"><i class="fa fa-check"></i><b>13.2.4</b> Validators</a></li>
+<li class="chapter" data-level="13.2.5" data-path="classes.html"><a href="classes.html#helpers"><i class="fa fa-check"></i><b>13.2.5</b> Helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="generics-and-methods.html"><a href="generics-and-methods.html"><i class="fa fa-check"></i><b>13.3</b> Generics and methods</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="generics-and-methods.html"><a href="generics-and-methods.html#generic-functions"><i class="fa fa-check"></i><b>13.3.1</b> Generic functions</a></li>
+<li class="chapter" data-level="13.3.2" data-path="generics-and-methods.html"><a href="generics-and-methods.html#method-dispatch"><i class="fa fa-check"></i><b>13.3.2</b> Method dispatch</a></li>
+<li class="chapter" data-level="13.3.3" data-path="generics-and-methods.html"><a href="generics-and-methods.html#finding-methods"><i class="fa fa-check"></i><b>13.3.3</b> Finding methods</a></li>
+<li class="chapter" data-level="13.3.4" data-path="generics-and-methods.html"><a href="generics-and-methods.html#creating-methods"><i class="fa fa-check"></i><b>13.3.4</b> Creating methods</a></li>
+<li class="chapter" data-level="13.3.5" data-path="generics-and-methods.html"><a href="generics-and-methods.html#examples-caught-in-the-wild"><i class="fa fa-check"></i><b>13.3.5</b> Examples caught in the wild</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="inheritance.html"><a href="inheritance.html"><i class="fa fa-check"></i><b>13.4</b> Inheritance</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="inheritance.html"><a href="inheritance.html#nextmethod"><i class="fa fa-check"></i><b>13.4.1</b> NextMethod()</a></li>
+<li class="chapter" data-level="13.4.2" data-path="inheritance.html"><a href="inheritance.html#allowing-subclassing"><i class="fa fa-check"></i><b>13.4.2</b> Allowing subclassing</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html"><i class="fa fa-check"></i><b>13.5</b> Meeting Videos</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-1-12"><i class="fa fa-check"></i><b>13.5.1</b> Cohort 1</a></li>
+<li class="chapter" data-level="13.5.2" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-2-12"><i class="fa fa-check"></i><b>13.5.2</b> Cohort 2</a></li>
+<li class="chapter" data-level="13.5.3" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-3-12"><i class="fa fa-check"></i><b>13.5.3</b> Cohort 3</a></li>
+<li class="chapter" data-level="13.5.4" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-4-12"><i class="fa fa-check"></i><b>13.5.4</b> Cohort 4</a></li>
+<li class="chapter" data-level="13.5.5" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-5-12"><i class="fa fa-check"></i><b>13.5.5</b> Cohort 5</a></li>
+<li class="chapter" data-level="13.5.6" data-path="meeting-videos-12.html"><a href="meeting-videos-12.html#cohort-6-12"><i class="fa fa-check"></i><b>13.5.6</b> Cohort 6</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>14</b> R6</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="slide-1-3.html"><a href="slide-1-3.html"><i class="fa fa-check"></i><b>14.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="14.1" data-path="slide-1-2.html"><a href="slide-1-2.html"><i class="fa fa-check"></i><b>14.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="14.2" data-path="meeting-videos-13.html"><a href="meeting-videos-13.html"><i class="fa fa-check"></i><b>14.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="14.2.1" data-path="meeting-videos-13.html"><a href="meeting-videos-13.html#cohort-1-13"><i class="fa fa-check"></i><b>14.2.1</b> Cohort 1</a></li>
@@ -514,7 +535,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="15" data-path="s4-1.html"><a href="s4-1.html"><i class="fa fa-check"></i><b>15</b> S4</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="slide-1-4.html"><a href="slide-1-4.html"><i class="fa fa-check"></i><b>15.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="15.1" data-path="slide-1-3.html"><a href="slide-1-3.html"><i class="fa fa-check"></i><b>15.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="15.2" data-path="meeting-videos-14.html"><a href="meeting-videos-14.html"><i class="fa fa-check"></i><b>15.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="15.2.1" data-path="meeting-videos-14.html"><a href="meeting-videos-14.html#cohort-1-14"><i class="fa fa-check"></i><b>15.2.1</b> Cohort 1</a></li>
@@ -527,7 +548,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16" data-path="trade-offs.html"><a href="trade-offs.html"><i class="fa fa-check"></i><b>16</b> Trade-offs</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="slide-1-5.html"><a href="slide-1-5.html"><i class="fa fa-check"></i><b>16.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="16.1" data-path="slide-1-4.html"><a href="slide-1-4.html"><i class="fa fa-check"></i><b>16.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="16.2" data-path="meeting-videos-15.html"><a href="meeting-videos-15.html"><i class="fa fa-check"></i><b>16.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="16.2.1" data-path="meeting-videos-15.html"><a href="meeting-videos-15.html#cohort-1-15"><i class="fa fa-check"></i><b>16.2.1</b> Cohort 1</a></li>
@@ -540,7 +561,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="17" data-path="big-picture.html"><a href="big-picture.html"><i class="fa fa-check"></i><b>17</b> Big picture</a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="slide-1-6.html"><a href="slide-1-6.html"><i class="fa fa-check"></i><b>17.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="17.1" data-path="slide-1-5.html"><a href="slide-1-5.html"><i class="fa fa-check"></i><b>17.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="17.2" data-path="meeting-videos-16.html"><a href="meeting-videos-16.html"><i class="fa fa-check"></i><b>17.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="17.2.1" data-path="meeting-videos-16.html"><a href="meeting-videos-16.html#cohort-1-16"><i class="fa fa-check"></i><b>17.2.1</b> Cohort 1</a></li>
@@ -553,7 +574,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18" data-path="expressions.html"><a href="expressions.html"><i class="fa fa-check"></i><b>18</b> Expressions</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="slide-1-7.html"><a href="slide-1-7.html"><i class="fa fa-check"></i><b>18.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="18.1" data-path="slide-1-6.html"><a href="slide-1-6.html"><i class="fa fa-check"></i><b>18.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="18.2" data-path="meeting-videos-17.html"><a href="meeting-videos-17.html"><i class="fa fa-check"></i><b>18.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="18.2.1" data-path="meeting-videos-17.html"><a href="meeting-videos-17.html#cohort-1-17"><i class="fa fa-check"></i><b>18.2.1</b> Cohort 1</a></li>
@@ -566,7 +587,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>19</b> Quasiquotation</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="slide-1-8.html"><a href="slide-1-8.html"><i class="fa fa-check"></i><b>19.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="19.1" data-path="slide-1-7.html"><a href="slide-1-7.html"><i class="fa fa-check"></i><b>19.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="19.2" data-path="meeting-videos-18.html"><a href="meeting-videos-18.html"><i class="fa fa-check"></i><b>19.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="19.2.1" data-path="meeting-videos-18.html"><a href="meeting-videos-18.html#cohort-1-18"><i class="fa fa-check"></i><b>19.2.1</b> Cohort 1</a></li>
@@ -579,7 +600,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="20" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>20</b> Evaluation</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="slide-1-9.html"><a href="slide-1-9.html"><i class="fa fa-check"></i><b>20.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="20.1" data-path="slide-1-8.html"><a href="slide-1-8.html"><i class="fa fa-check"></i><b>20.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="20.2" data-path="meeting-videos-19.html"><a href="meeting-videos-19.html"><i class="fa fa-check"></i><b>20.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="20.2.1" data-path="meeting-videos-19.html"><a href="meeting-videos-19.html#cohort-1-19"><i class="fa fa-check"></i><b>20.2.1</b> Cohort 1</a></li>
@@ -592,7 +613,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="21" data-path="translating-r-code.html"><a href="translating-r-code.html"><i class="fa fa-check"></i><b>21</b> Translating R code</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="slide-1-10.html"><a href="slide-1-10.html"><i class="fa fa-check"></i><b>21.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="21.1" data-path="slide-1-9.html"><a href="slide-1-9.html"><i class="fa fa-check"></i><b>21.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="21.2" data-path="meeting-videos-20.html"><a href="meeting-videos-20.html"><i class="fa fa-check"></i><b>21.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="21.2.1" data-path="meeting-videos-20.html"><a href="meeting-videos-20.html#cohort-1-20"><i class="fa fa-check"></i><b>21.2.1</b> Cohort 1</a></li>
@@ -605,7 +626,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="22" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>22</b> Debugging</a>
 <ul>
-<li class="chapter" data-level="22.1" data-path="slide-1-11.html"><a href="slide-1-11.html"><i class="fa fa-check"></i><b>22.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="22.1" data-path="slide-1-10.html"><a href="slide-1-10.html"><i class="fa fa-check"></i><b>22.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="22.2" data-path="meeting-videos-21.html"><a href="meeting-videos-21.html"><i class="fa fa-check"></i><b>22.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="22.2.1" data-path="meeting-videos-21.html"><a href="meeting-videos-21.html#cohort-1-21"><i class="fa fa-check"></i><b>22.2.1</b> Cohort 1</a></li>
@@ -618,7 +639,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="23" data-path="measuring-performance.html"><a href="measuring-performance.html"><i class="fa fa-check"></i><b>23</b> Measuring performance</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="slide-1-12.html"><a href="slide-1-12.html"><i class="fa fa-check"></i><b>23.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="23.1" data-path="slide-1-11.html"><a href="slide-1-11.html"><i class="fa fa-check"></i><b>23.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="23.2" data-path="meeting-videos-22.html"><a href="meeting-videos-22.html"><i class="fa fa-check"></i><b>23.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="23.2.1" data-path="meeting-videos-22.html"><a href="meeting-videos-22.html#cohort-1-22"><i class="fa fa-check"></i><b>23.2.1</b> Cohort 1</a></li>
@@ -631,7 +652,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="24" data-path="improving-performance.html"><a href="improving-performance.html"><i class="fa fa-check"></i><b>24</b> Improving performance</a>
 <ul>
-<li class="chapter" data-level="24.1" data-path="slide-1-13.html"><a href="slide-1-13.html"><i class="fa fa-check"></i><b>24.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="24.1" data-path="slide-1-12.html"><a href="slide-1-12.html"><i class="fa fa-check"></i><b>24.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="24.2" data-path="meeting-videos-23.html"><a href="meeting-videos-23.html"><i class="fa fa-check"></i><b>24.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="24.2.1" data-path="meeting-videos-23.html"><a href="meeting-videos-23.html#cohort-1-23"><i class="fa fa-check"></i><b>24.2.1</b> Cohort 1</a></li>
@@ -644,7 +665,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="25" data-path="rewriting-r-code-in-c.html"><a href="rewriting-r-code-in-c.html"><i class="fa fa-check"></i><b>25</b> Rewriting R code in C++</a>
 <ul>
-<li class="chapter" data-level="25.1" data-path="slide-1-14.html"><a href="slide-1-14.html"><i class="fa fa-check"></i><b>25.1</b> SLIDE 1</a></li>
+<li class="chapter" data-level="25.1" data-path="slide-1-13.html"><a href="slide-1-13.html"><i class="fa fa-check"></i><b>25.1</b> SLIDE 1</a></li>
 <li class="chapter" data-level="25.2" data-path="meeting-videos-24.html"><a href="meeting-videos-24.html"><i class="fa fa-check"></i><b>25.2</b> Meeting Videos</a>
 <ul>
 <li class="chapter" data-level="25.2.1" data-path="meeting-videos-24.html"><a href="meeting-videos-24.html#cohort-1-24"><i class="fa fa-check"></i><b>25.2.1</b> Cohort 1</a></li>
@@ -675,20 +696,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="slide-1-14" class="section level2 hasAnchor" number="25.1">
-<h2><span class="header-section-number">25.1</span> SLIDE 1<a href="slide-1-14.html#slide-1-14" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generics-and-methods" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> Generics and methods<a href="generics-and-methods.html#generics-and-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generic-functions" class="section level3 hasAnchor" number="13.3.1">
+<h3><span class="header-section-number">13.3.1</span> Generic functions<a href="generics-and-methods.html#generic-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>ADD SLIDES AS SECTIONS (<code>##</code>).</li>
-<li>TRY TO KEEP THEM RELATIVELY SLIDE-LIKE; THESE ARE NOTES, NOT THE BOOK ITSELF.</li>
+<li>Consist of a call to <code>UseMethod()</code></li>
+<li>Pass arguments from the generic to the dispatched method “auto-magically”</li>
 </ul>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="generics-and-methods.html#cb237-1" aria-hidden="true" tabindex="-1"></a>my_new_generic <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb237-2"><a href="generics-and-methods.html#cb237-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">UseMethod</span>(<span class="st">&quot;my_new_generic&quot;</span>)</span>
+<span id="cb237-3"><a href="generics-and-methods.html#cb237-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="method-dispatch" class="section level3 hasAnchor" number="13.3.2">
+<h3><span class="header-section-number">13.3.2</span> Method dispatch<a href="generics-and-methods.html#method-dispatch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><code>UseMethod()</code> creates a vector of method names</li>
+<li>Dispatch
+<ul>
+<li>Examines all methods in the vector</li>
+<li>Selects a method</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="generics-and-methods.html#cb238-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
+<span id="cb238-2"><a href="generics-and-methods.html#cb238-2" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(x))</span>
+<span id="cb238-3"><a href="generics-and-methods.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; =&gt; print.Date</span></span>
+<span id="cb238-4"><a href="generics-and-methods.html#cb238-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  * print.default</span></span></code></pre></div>
+</div>
+<div id="finding-methods" class="section level3 hasAnchor" number="13.3.3">
+<h3><span class="header-section-number">13.3.3</span> Finding methods<a href="generics-and-methods.html#finding-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While <code>sloop::s3_dispatch()</code> gives the specific method selected for a specific call, on can see the methods defined:</p>
+<ul>
+<li>For a generic</li>
+</ul>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="generics-and-methods.html#cb239-1" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">s3_methods_generic</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb239-2"><a href="generics-and-methods.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 4</span></span>
+<span id="cb239-3"><a href="generics-and-methods.html#cb239-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   generic class      visible source             </span></span>
+<span id="cb239-4"><a href="generics-and-methods.html#cb239-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;lgl&gt;   &lt;chr&gt;              </span></span>
+<span id="cb239-5"><a href="generics-and-methods.html#cb239-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 mean    Date       TRUE    base               </span></span>
+<span id="cb239-6"><a href="generics-and-methods.html#cb239-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 mean    default    TRUE    base               </span></span>
+<span id="cb239-7"><a href="generics-and-methods.html#cb239-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 mean    difftime   TRUE    base               </span></span>
+<span id="cb239-8"><a href="generics-and-methods.html#cb239-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 mean    integer64  FALSE   registered S3method</span></span>
+<span id="cb239-9"><a href="generics-and-methods.html#cb239-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 mean    POSIXct    TRUE    base               </span></span>
+<span id="cb239-10"><a href="generics-and-methods.html#cb239-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 mean    POSIXlt    TRUE    base               </span></span>
+<span id="cb239-11"><a href="generics-and-methods.html#cb239-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 mean    quosure    FALSE   registered S3method</span></span>
+<span id="cb239-12"><a href="generics-and-methods.html#cb239-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 mean    vctrs_vctr FALSE   registered S3method</span></span></code></pre></div>
+<ul>
+<li>For a class</li>
+</ul>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="generics-and-methods.html#cb240-1" aria-hidden="true" tabindex="-1"></a>sloop<span class="sc">::</span><span class="fu">s3_methods_class</span>(<span class="st">&quot;ordered&quot;</span>)</span>
+<span id="cb240-2"><a href="generics-and-methods.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span id="cb240-3"><a href="generics-and-methods.html#cb240-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   generic       class   visible source             </span></span>
+<span id="cb240-4"><a href="generics-and-methods.html#cb240-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;              </span></span>
+<span id="cb240-5"><a href="generics-and-methods.html#cb240-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 as.data.frame ordered TRUE    base               </span></span>
+<span id="cb240-6"><a href="generics-and-methods.html#cb240-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Ops           ordered TRUE    base               </span></span>
+<span id="cb240-7"><a href="generics-and-methods.html#cb240-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 relevel       ordered FALSE   registered S3method</span></span>
+<span id="cb240-8"><a href="generics-and-methods.html#cb240-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 scale_type    ordered FALSE   registered S3method</span></span>
+<span id="cb240-9"><a href="generics-and-methods.html#cb240-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Summary       ordered TRUE    base               </span></span>
+<span id="cb240-10"><a href="generics-and-methods.html#cb240-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 type_sum      ordered FALSE   registered S3method</span></span></code></pre></div>
+</div>
+<div id="creating-methods" class="section level3 hasAnchor" number="13.3.4">
+<h3><span class="header-section-number">13.3.4</span> Creating methods<a href="generics-and-methods.html#creating-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Two rules:</p>
+<ul>
+<li>Only write a method if you own the generic. Otherwise, bad manners.</li>
+<li>Method must have same arguments as its generic–with one important exception: <code>...</code></li>
+</ul>
+</div>
+<div id="examples-caught-in-the-wild" class="section level3 hasAnchor" number="13.3.5">
+<h3><span class="header-section-number">13.3.5</span> Examples caught in the wild<a href="generics-and-methods.html#examples-caught-in-the-wild" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><a href="https://github.com/tidyverse/haven/blob/main/R/zap_label.R"><code>haven::zap_label</code></a>, which removes column labels</li>
+<li><a href="https://github.com/tidyverse/dplyr/blob/main/R/mutate.R"><code>dplyr::mutate</code></a></li>
+<li><a href="https://github.com/tidyverse/tidyr/blob/main/R/pivot-long.R"><code>tidyr::pivot_longer</code></a></li>
+</ul>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="rewriting-r-code-in-c.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="meeting-videos-24.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="classes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inheritance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -719,7 +809,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/25_Rewriting_R_code_in_C++.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/13_S3.Rmd",
 "text": "Edit"
 },
 "history": {

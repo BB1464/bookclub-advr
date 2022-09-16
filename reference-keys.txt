@@ -234,7 +234,22 @@ cohort-4-11
 cohort-5-11
 cohort-6-11
 s3
-slide-1-2
+basics
+classes
+theory
+practice
+constructors
+validators
+helpers
+generics-and-methods
+generic-functions
+method-dispatch
+finding-methods
+creating-methods
+examples-caught-in-the-wild
+inheritance
+nextmethod
+allowing-subclassing
 meeting-videos-12
 cohort-1-12
 cohort-2-12
@@ -243,7 +258,7 @@ cohort-4-12
 cohort-5-12
 cohort-6-12
 r6
-slide-1-3
+slide-1-2
 meeting-videos-13
 cohort-1-13
 cohort-2-13
@@ -252,7 +267,7 @@ cohort-4-13
 cohort-5-13
 cohort-6-13
 s4-1
-slide-1-4
+slide-1-3
 meeting-videos-14
 cohort-1-14
 cohort-2-14
@@ -261,7 +276,7 @@ cohort-4-14
 cohort-5-14
 cohort-6-14
 trade-offs
-slide-1-5
+slide-1-4
 meeting-videos-15
 cohort-1-15
 cohort-2-15
@@ -270,7 +285,7 @@ cohort-4-15
 cohort-5-15
 cohort-6-15
 big-picture
-slide-1-6
+slide-1-5
 meeting-videos-16
 cohort-1-16
 cohort-2-16
@@ -279,7 +294,7 @@ cohort-4-16
 cohort-5-16
 cohort-6-16
 expressions
-slide-1-7
+slide-1-6
 meeting-videos-17
 cohort-1-17
 cohort-2-17
@@ -288,7 +303,7 @@ cohort-4-17
 cohort-5-17
 cohort-6-17
 quasiquotation
-slide-1-8
+slide-1-7
 meeting-videos-18
 cohort-1-18
 cohort-2-18
@@ -297,7 +312,7 @@ cohort-4-18
 cohort-5-18
 cohort-6-18
 evaluation
-slide-1-9
+slide-1-8
 meeting-videos-19
 cohort-1-19
 cohort-2-19
@@ -306,7 +321,7 @@ cohort-4-19
 cohort-5-19
 cohort-6-19
 translating-r-code
-slide-1-10
+slide-1-9
 meeting-videos-20
 cohort-1-20
 cohort-2-20
@@ -315,7 +330,7 @@ cohort-4-20
 cohort-5-20
 cohort-6-20
 debugging
-slide-1-11
+slide-1-10
 meeting-videos-21
 cohort-1-21
 cohort-2-21
@@ -324,7 +339,7 @@ cohort-4-21
 cohort-5-21
 cohort-6-21
 measuring-performance
-slide-1-12
+slide-1-11
 meeting-videos-22
 cohort-1-22
 cohort-2-22
@@ -333,7 +348,7 @@ cohort-4-22
 cohort-5-22
 cohort-6-22
 improving-performance
-slide-1-13
+slide-1-12
 meeting-videos-23
 cohort-1-23
 cohort-2-23
@@ -342,7 +357,7 @@ cohort-4-23
 cohort-5-23
 cohort-6-23
 rewriting-r-code-in-c
-slide-1-14
+slide-1-13
 meeting-videos-24
 cohort-1-24
 cohort-2-24

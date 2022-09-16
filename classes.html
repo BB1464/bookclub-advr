@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.4 Function composition | Advanced R Book Club</title>
+  <title>13.2 Classes | Advanced R Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.4 Function composition | Advanced R Book Club" />
+  <meta property="og:title" content="13.2 Classes | Advanced R Book Club" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   <meta name="github-repo" content="r4ds/bookclub-advr" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.4 Function composition | Advanced R Book Club" />
+  <meta name="twitter:title" content="13.2 Classes | Advanced R Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Advanced R Book Club." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="anonymous-functions.html"/>
-<link rel="next" href="more-about-functions-insights.html"/>
+<link rel="prev" href="basics.html"/>
+<link rel="next" href="generics-and-methods.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -696,33 +696,119 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="function-composition" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Function composition<a href="function-composition.html#function-composition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="function-composition.html#cb85-1" aria-hidden="true" tabindex="-1"></a>square <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb85-2"><a href="function-composition.html#cb85-2" aria-hidden="true" tabindex="-1"></a>deviation <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
-<span id="cb85-3"><a href="function-composition.html#cb85-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb85-4"><a href="function-composition.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(<span class="fu">square</span>(<span class="fu">deviation</span>(x))))</span>
-<span id="cb85-5"><a href="function-composition.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2812728</span></span></code></pre></div>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="function-composition.html#cb86-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">deviation</span>(x)</span>
-<span id="cb86-2"><a href="function-composition.html#cb86-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">square</span>(out)</span>
-<span id="cb86-3"><a href="function-composition.html#cb86-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">mean</span>(out)</span>
-<span id="cb86-4"><a href="function-composition.html#cb86-4" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(out)</span>
-<span id="cb86-5"><a href="function-composition.html#cb86-5" aria-hidden="true" tabindex="-1"></a>out</span>
-<span id="cb86-6"><a href="function-composition.html#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2812728</span></span></code></pre></div>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="function-composition.html#cb87-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span></span>
-<span id="cb87-2"><a href="function-composition.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deviation</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb87-3"><a href="function-composition.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">square</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb87-4"><a href="function-composition.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb87-5"><a href="function-composition.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>()</span>
-<span id="cb87-6"><a href="function-composition.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2812728</span></span></code></pre></div>
+<div id="classes" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Classes<a href="classes.html#classes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="theory" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Theory<a href="classes.html#theory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What is class?</p>
+<ul>
+<li>No formal definition in S3</li>
+<li>Simply set class attribute</li>
+</ul>
+<p>How to set class?</p>
+<ul>
+<li>At time of object creation</li>
+<li>After object creation</li>
+</ul>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="classes.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="co"># at time of object creation</span></span>
+<span id="cb233-2"><a href="classes.html#cb233-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(), <span class="at">class =</span> <span class="st">&quot;my_class&quot;</span>)</span>
+<span id="cb233-3"><a href="classes.html#cb233-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb233-4"><a href="classes.html#cb233-4" aria-hidden="true" tabindex="-1"></a><span class="co"># after object creation</span></span>
+<span id="cb233-5"><a href="classes.html#cb233-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb233-6"><a href="classes.html#cb233-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="st">&quot;my_class&quot;</span></span></code></pre></div>
+<p>Some advice on style:</p>
+<ul>
+<li>Rules: Can be any string</li>
+<li>Advice: Consider using/including package name to avoid collision with name of another class (e.g., <code>blob</code>, which defines a single class; haven has <code>labelled</code> and <code>haven_labelled</code>)</li>
+<li>Convention: letters and <code>_</code>; avoid <code>.</code> since it might be confused as separator between generic and class name</li>
+</ul>
+</div>
+<div id="practice" class="section level3 hasAnchor" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Practice<a href="classes.html#practice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>How to compose a class in practice?</p>
+<ul>
+<li><strong>Constructor</strong>, which helps the developer create new object of target class. Provide always.</li>
+<li><strong>Validator</strong>, which checks that values in constructor are valid. May not be necessary for simple classes.</li>
+<li><strong>Helper</strong>, which helps users create new objects of target class. May be relevant only for user-facing classes.</li>
+</ul>
+</div>
+<div id="constructors" class="section level3 hasAnchor" number="13.2.3">
+<h3><span class="header-section-number">13.2.3</span> Constructors<a href="classes.html#constructors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Help developers construct an object of the target class:</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="classes.html#cb234-1" aria-hidden="true" tabindex="-1"></a>new_difftime <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">double</span>(), <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>) {</span>
+<span id="cb234-2"><a href="classes.html#cb234-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># check inputs</span></span>
+<span id="cb234-3"><a href="classes.html#cb234-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># issue generic system error if unexpected type or value</span></span>
+<span id="cb234-4"><a href="classes.html#cb234-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.double</span>(x))</span>
+<span id="cb234-5"><a href="classes.html#cb234-5" aria-hidden="true" tabindex="-1"></a>  units <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(units, <span class="fu">c</span>(<span class="st">&quot;secs&quot;</span>, <span class="st">&quot;mins&quot;</span>, <span class="st">&quot;hours&quot;</span>, <span class="st">&quot;days&quot;</span>, <span class="st">&quot;weeks&quot;</span>))</span>
+<span id="cb234-6"><a href="classes.html#cb234-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb234-7"><a href="classes.html#cb234-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># construct instance of target class</span></span>
+<span id="cb234-8"><a href="classes.html#cb234-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(x,</span>
+<span id="cb234-9"><a href="classes.html#cb234-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&quot;difftime&quot;</span>,</span>
+<span id="cb234-10"><a href="classes.html#cb234-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">units =</span> units</span>
+<span id="cb234-11"><a href="classes.html#cb234-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb234-12"><a href="classes.html#cb234-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="validators" class="section level3 hasAnchor" number="13.2.4">
+<h3><span class="header-section-number">13.2.4</span> Validators<a href="classes.html#validators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Contrast a constructor, aimed at quickly creating instances of a class, which only checks type of inputs …</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="classes.html#cb235-1" aria-hidden="true" tabindex="-1"></a>new_factor <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">x =</span> <span class="fu">integer</span>(), <span class="at">levels =</span> <span class="fu">character</span>()) {</span>
+<span id="cb235-2"><a href="classes.html#cb235-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.integer</span>(x))</span>
+<span id="cb235-3"><a href="classes.html#cb235-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.character</span>(levels))</span>
+<span id="cb235-4"><a href="classes.html#cb235-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-5"><a href="classes.html#cb235-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb235-6"><a href="classes.html#cb235-6" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb235-7"><a href="classes.html#cb235-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> levels,</span>
+<span id="cb235-8"><a href="classes.html#cb235-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&quot;factor&quot;</span></span>
+<span id="cb235-9"><a href="classes.html#cb235-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb235-10"><a href="classes.html#cb235-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb235-11"><a href="classes.html#cb235-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-12"><a href="classes.html#cb235-12" aria-hidden="true" tabindex="-1"></a><span class="co"># error messages are for system default and developer-facing</span></span>
+<span id="cb235-13"><a href="classes.html#cb235-13" aria-hidden="true" tabindex="-1"></a><span class="fu">new_factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="st">&quot;a&quot;</span>)</span>
+<span id="cb235-14"><a href="classes.html#cb235-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in as.character.factor(x): malformed factor</span></span></code></pre></div>
+<p>… with a validator, aimed at emitting errors if inputs pose problems, which makes more expensive checks</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="classes.html#cb236-1" aria-hidden="true" tabindex="-1"></a>validate_factor <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb236-2"><a href="classes.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  values <span class="ot">&lt;-</span> <span class="fu">unclass</span>(x)</span>
+<span id="cb236-3"><a href="classes.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  levels <span class="ot">&lt;-</span> <span class="fu">attr</span>(x, <span class="st">&quot;levels&quot;</span>)</span>
+<span id="cb236-4"><a href="classes.html#cb236-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-5"><a href="classes.html#cb236-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="sc">!</span><span class="fu">is.na</span>(values) <span class="sc">&amp;</span> values <span class="sc">&gt;</span> <span class="dv">0</span>)) {</span>
+<span id="cb236-6"><a href="classes.html#cb236-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(</span>
+<span id="cb236-7"><a href="classes.html#cb236-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;All `x` values must be non-missing and greater than zero&quot;</span>,</span>
+<span id="cb236-8"><a href="classes.html#cb236-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">call. =</span> <span class="cn">FALSE</span></span>
+<span id="cb236-9"><a href="classes.html#cb236-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb236-10"><a href="classes.html#cb236-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb236-11"><a href="classes.html#cb236-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-12"><a href="classes.html#cb236-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(levels) <span class="sc">&lt;</span> <span class="fu">max</span>(values)) {</span>
+<span id="cb236-13"><a href="classes.html#cb236-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(</span>
+<span id="cb236-14"><a href="classes.html#cb236-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;There must be at least as many `levels` as possible values in `x`&quot;</span>,</span>
+<span id="cb236-15"><a href="classes.html#cb236-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">call. =</span> <span class="cn">FALSE</span></span>
+<span id="cb236-16"><a href="classes.html#cb236-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb236-17"><a href="classes.html#cb236-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb236-18"><a href="classes.html#cb236-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-19"><a href="classes.html#cb236-19" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb236-20"><a href="classes.html#cb236-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb236-21"><a href="classes.html#cb236-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-22"><a href="classes.html#cb236-22" aria-hidden="true" tabindex="-1"></a><span class="co"># error messages are informative and user-facing</span></span>
+<span id="cb236-23"><a href="classes.html#cb236-23" aria-hidden="true" tabindex="-1"></a><span class="fu">validate_factor</span>(<span class="fu">new_factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="st">&quot;a&quot;</span>))</span>
+<span id="cb236-24"><a href="classes.html#cb236-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: There must be at least as many `levels` as possible values in `x`</span></span></code></pre></div>
+</div>
+<div id="helpers" class="section level3 hasAnchor" number="13.2.5">
+<h3><span class="header-section-number">13.2.5</span> Helpers<a href="classes.html#helpers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Some desired virtues:</p>
+<ul>
+<li>Have the same name as the class</li>
+<li>Call the constructor and validator, if the latter exists.</li>
+<li>Issue error informative, user-facing error messages</li>
+<li>Adopt thoughtful/useful defaults or type conversion</li>
+</ul>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="anonymous-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="more-about-functions-insights.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generics-and-methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -753,7 +839,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-advr/edit/main/06_Functions.Rmd",
+"link": "https://github.com/r4ds/bookclub-advr/edit/main/13_S3.Rmd",
 "text": "Edit"
 },
 "history": {
